@@ -7,8 +7,8 @@ OUTPUT=../build
 SRCDIR=../kernel
 DTBTOOL=$PWD/dtbtool
 MKBOOTIMG=$PWD/mkbootimg
-#Avaaliable product are AR758X/AR759X
-PRODUCT=AR758X    
+#Avaaliable product are ar758x/ar759x
+PRODUCT=ar758x    
 #Avaaliable product are 1.7/2.2
 VERSION=2.2    
 
@@ -21,7 +21,7 @@ $0 <options ...>
   Global:
     -p <product>
     -v <yocto version>
-  Available products: AR758X/AR759X
+  Available products: ar758x/ar759x
   Available yocto version: 1.7/2.2
   Notes:
     Please copy defconfig and INITRAMFS files to the folder $0 run in"
@@ -79,24 +79,24 @@ case $VERSION in
         ;;
 esac
 
-if [ "$PRODUCT" == "AR758X" ] && [ "$VERSION" == "1.7" ];then
+if [ "$PRODUCT" == "ar758x" ] && [ "$VERSION" == "1.7" ];then
     KERNEL_BASE=0x80000000
     TAG_OFFSET=0x88000000
     INITRAMFS=./mdm9x28-image-initramfs-swi-mdm9x28.cpio
     CMDLINE="console=ttyHSL0,115200 console=ttyHSL1,115200 root=/dev/ram rootfs_ro=true user1_fs=ubifs fudge_ro_rootfs=false verity=on debug_locks_verbose=1"
-elif [ "$PRODUCT" == "AR758X" ] && [ "$VERSION" == "2.2" ];then
+elif [ "$PRODUCT" == "ar758x" ] && [ "$VERSION" == "2.2" ];then
     KERNEL_BASE=0x80000000
     TAG_OFFSET=0x88000000
     INITRAMFS=./mdm9x28-image-initramfs-swi-mdm9x28-ar758x.cpio
     CMDLINE="console=ttyHSL0,115200 console=ttyHSL1,115200 root=/dev/ram rootfs_ro=true user1_fs=ubifs fudge_ro_rootfs=false verity=on "
-elif [ "$PRODUCT" == "AR759X" ] && [ "$VERSION" == "1.7" ];then
+elif [ "$PRODUCT" == "ar759x" ] && [ "$VERSION" == "1.7" ];then
     KERNEL_BASE=0x81800000
-    TAG_OFFSET=0x81700000
+    TAG_OFFSET=0x82a00000
     INITRAMFS=./mdm9x40-image-initramfs-swi-mdm9x40.cpio
     CMDLINE="console=ttyHSL0,115200 console=ttyHSL1,115200 root=/dev/ram user1_fs=ubifs verity=on dynamic_debug.verbose=1 debug_locks_verbose=1"
-elif [ "$PRODUCT" == "AR759X" ] && [ "$VERSION" == "2.2" ];then
+elif [ "$PRODUCT" == "ar759x" ] && [ "$VERSION" == "2.2" ];then
     KERNEL_BASE=0x81800000
-    TAG_OFFSET=0x81700000
+    TAG_OFFSET=0x82a00000
     INITRAMFS=./mdm9x40-image-initramfs-swi-mdm9x40-ar759x.cpio
     CMDLINE="console=ttyHSL0,115200 console=ttyHSL1,115200 root=/dev/ram user1_fs=ubifs verity=on dynamic_debug.verbose=1 debug_locks_verbose=1"
 else
