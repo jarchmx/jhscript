@@ -57,7 +57,7 @@ do
         ;;
     v)
         VERSION=$OPTARG
-        echo "VERSION: $PRODUCT"
+        echo "VERSION: $VERSION"
         ;;
     ?)
         echo "$0: invalid option -$OPTARG" 1>&2
@@ -98,7 +98,7 @@ elif [ "$PRODUCT" == "ar759x" ] && [ "$VERSION" == "2.2" ];then
     KERNEL_BASE=0x81800000
     TAG_OFFSET=0x82a00000
     INITRAMFS=./mdm9x40-image-initramfs-swi-mdm9x40-ar759x.cpio
-    CMDLINE="console=ttyHSL0,115200 console=ttyHSL1,115200 root=/dev/ram user1_fs=ubifs verity=on dynamic_debug.verbose=1 debug_locks_verbose=1"
+    CMDLINE="console=ttyHSL0,115200 console=ttyHSL1,115200 root=/dev/ram user1_fs=ubifs verity=on fudge_ro_rootfs=false"
 else
     echo "Wrong product or yocto version"
     usage
@@ -113,6 +113,7 @@ CMDLINE="$CMDLINE $IMA_PARAM $UBIFS_PARAM"
 mkdir -p $OUTPUT
 cp $INITRAMFS $OUTPUT
 export LOCALVERSION=
+export EXTRAVERSION=
 [ -f ima-local-ca.x509 ] && cp ima-local-ca.x509 $OUTPUT
 
 #build kernel
