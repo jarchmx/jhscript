@@ -118,6 +118,8 @@ export EXTRAVERSION=
 
 #build kernel
 [ ! -f $OUTPUT/.config ] && cp defconfig $OUTPUT/.config
+#Fix version magic '3.18.31 preempt mod_unload ARMv7 p2v8 issue.
+touch $SRCDIR/.scmversion
 #ARCH=arm make -C $SRCDIR O=$OUTPUT oldconfig
 ARCH=arm CROSS_COMPILE="ccache arm-poky-linux-gnueabi-" make -j8 -C $SRCDIR CC="ccache arm-poky-linux-gnueabi-gcc -mno-thumb-interwork -marm" \
     LD="arm-poky-linux-gnueabi-ld.bfd" O=$OUTPUT CONFIG_INITRAMFS_SOURCE=$INITRAMFS V=1
@@ -149,3 +151,4 @@ echo -n $mbnhdr_data | sed 's/\([0-9A-F]\{2\}\)/\\\\\\x\1/gI' | xargs printf > .
 openssl dgst -sha256 -binary ./boot.img > ./boot_hash
 cat ./boot_mbnhdr ./boot_hash >> ./boot.img
 gen_hash_pad boot_mbnhdr boot_hash boot.img 4096
+rm -f $SRCDIR/.scmversion
