@@ -70,11 +70,11 @@ fi
 if [ -z $dtb ];then
  qemu-system-arm -device virtio-net-pci,netdev=net0,mac=52:54:00:12:34:02 -netdev tap,id=net0,ifname=tap0,script=no,downscript=no \
 -drive file=$diskfile,if=virtio,format=raw -show-cursor -usb -device usb-tablet -device virtio-rng-pci  -machine versatilepb  -m 256  \
--nographic -serial mon:stdio -serial null -kernel $kernel 
+-nographic -serial mon:stdio -serial null -kernel $kernel -s 
 -append 'root=/dev/vda rw highres=off  mem=256M ip=192.168.7.2::192.168.7.1:255.255.255.0 console=ttyAMA0,115200 console=tty ' 
 else
 qemu-system-arm -device virtio-net-pci,netdev=net0,mac=52:54:00:12:34:02 -netdev tap,id=net0,ifname=tap0,script=no,downscript=no \
 -drive file=$diskfile,if=virtio,format=raw -show-cursor -usb -device usb-tablet -device virtio-rng-pci  -machine versatilepb  -m 256  \
--nographic -serial mon:stdio -serial null -kernel $kernel -dtb $dtb \
+-nographic -serial mon:stdio -serial null -kernel $kernel -dtb $dtb -s \
 -append 'root=/dev/vda rw highres=off  mem=256M ip=192.168.7.2::192.168.7.1:255.255.255.0 console=ttyAMA0,115200 console=tty ' 
 fi
