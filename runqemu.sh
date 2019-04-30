@@ -3,7 +3,7 @@
 
 diskfile=
 kernel=
-
+dtb=
 
 usage()
 {
@@ -15,6 +15,7 @@ $0 <options ...>
     -h This help
     -k <kernel>
     -d <disk file>
+    -b <dtb file>
     It can be run under deploy directory without parameters.
 EOF
     exit 1
@@ -30,6 +31,9 @@ do
     d)
         diskfile=$OPTARG
         ;;
+    d)
+        dtb=$OPTARG
+        ;;
     h)
         usage
         ;;
@@ -41,11 +45,18 @@ do
 done
 
 if [ -z $diskfile ];then
-    diskfile=$(ls -lrt | grep .ext4$ | awk '{print $9}' | tail -n 1)
+    file=$(ls -lrt | grep .ext4$ | awk '{print $9}' | tail -n 1)
+    diskfile=$PWD/$file
 fi
 
 if [ -z $kernel ];then
-    kernel=$(ls -lrt | grep zImage | awk '{print $9}' | tail -n 1)
+    file=$(ls -lrt $PWD | grep zImage | awk '{print $9}' | tail -n 1)
+    kernel=$PWD/$file
+fi
+
+if [ -z $dtb ];then
+    file=$(ls -lrt $PWD | grep .dtb$ | awk '{print $9}' | tail -n 1)
+    dtb=$PWD/$file
 fi
 
 if [ -z $kernel -o -z $diskfile ];then
@@ -54,13 +65,16 @@ if [ -z $kernel -o -z $diskfile ];then
 fi
 
 
-BOOTPARAMS="root=/dev/vda rw highres=off  mem=512M ip=192.168.7.2::192.168.7.1:255.255.255.0 console=ttyAMA0,38400"
+#BOOTPARAMS="root=/dev/vda rw highres=off  mem=256M ip=192.168.7.2::192.168.7.1:255.255.255.0 console=ttyAMA0,115200 console=tty"
 
-#sudo qemu-system-arm -device virtio-net-device,netdev=net0,mac=52:54:00:12:34:02 -netdev tap,id=net0,ifname=tap0,script=no,downscript=no \
-#-drive id=disk0,file=$diskfile,if=none,format=raw \
-#-device virtio-blk-device,drive=disk0 -show-cursor -device virtio-rng-pci -monitor null -machine versatilepb -cpu cortex-a7 \
-#-m 256  -s -nographic -serial mon:stdio -serial null -kernel $kernel -append '$BOOTPARAMS'
-
-sudo qemu-system-arm -drive id=disk0,file=$diskfile,if=none,format=raw \
--device virtio-blk-device,drive=disk0 -show-cursor -device virtio-rng-pci -monitor null -machine versatilepb -cpu cortex-a7 \
--m 256  -s -nographic -serial mon:stdio -serial null -kernel $kernel -append '$BOOTPARAMS'
+if [ -z $dtb ];then
+ qemu-system-arm -device virtio-net-pci,netdev=net0,mac=52:54:00:12:34:02 -netdev tap,id=net0,ifname=tap0,script=no,downscript=no \
+-drive file=$diskfile,if=virtio,format=raw -show-cursor -usb -device usb-tablet -device virtio-rng-pci  -machine versatilepb  -m 256  \
+-nographic -serial mon:stdio -serial null -kernel $kernel 
+-append 'root=/dev/vda rw highres=off  mem=256M ip=192.168.7.2::192.168.7.1:255.255.255.0 console=ttyAMA0,115200 console=tty ' 
+else
+qemu-system-arm -device virtio-net-pci,netdev=net0,mac=52:54:00:12:34:02 -netdev tap,id=net0,ifname=tap0,script=no,downscript=no \
+-drive file=$diskfile,if=virtio,format=raw -show-cursor -usb -device usb-tablet -device virtio-rng-pci  -machine versatilepb  -m 256  \
+-nographic -serial mon:stdio -serial null -kernel $kernel -dtb $dtb \
+-append 'root=/dev/vda rw highres=off  mem=256M ip=192.168.7.2::192.168.7.1:255.255.255.0 console=ttyAMA0,115200 console=tty ' 
+fi
