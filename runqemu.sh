@@ -64,17 +64,26 @@ if [ -z $kernel -o -z $diskfile ];then
     usage
 fi
 
+TAPID=`ifconfig -a | grep tap | wc -l`
+TAP=tap$TAPID
+
+PORT=`sudo netstat  -nap  | grep qemu | grep -v ESTABLISHED | wc -l`
+PORT=$((PORT + 1234))
 
 #BOOTPARAMS="root=/dev/vda rw highres=off  mem=256M ip=192.168.7.2::192.168.7.1:255.255.255.0 console=ttyAMA0,115200 console=tty"
 
 if [ -z $dtb ];then
- qemu-system-arm -device virtio-net-pci,netdev=net0,mac=52:54:00:12:34:02 -netdev tap,id=net0,ifname=tap0,script=no,downscript=no \
+sudo qemu-system-arm -device virtio-net-pci,netdev=net0 -netdev tap,id=net0,ifname=$TAP,script=no,downscript=no \
 -drive file=$diskfile,if=virtio,format=raw -show-cursor -usb -device usb-tablet -device virtio-rng-pci  -machine versatilepb  -m 256  \
--nographic -serial mon:stdio -serial null -kernel $kernel -s 
+-cpu cortex-a7 -nographic -serial mon:stdio -serial null -kernel $kernel -gdb tcp::$PORT \
 -append 'root=/dev/vda rw highres=off  mem=256M ip=192.168.7.2::192.168.7.1:255.255.255.0 console=ttyAMA0,115200 console=tty ' 
 else
-qemu-system-arm -device virtio-net-pci,netdev=net0,mac=52:54:00:12:34:02 -netdev tap,id=net0,ifname=tap0,script=no,downscript=no \
+#sudo qemu-system-arm -device virtio-net-pci,netdev=net0,mac=52:54:00:12:34:02 -netdev tap,id=net0,ifname=tap0,script=no,downscript=no \
+#-drive file=$diskfile,if=virtio,format=raw -show-cursor -usb -device usb-tablet -device virtio-rng-pci  -machine versatilepb  -m 256  \
+#-nographic -serial mon:stdio -serial null -kernel $kernel -dtb $dtb -s \
+#-append 'root=/dev/vda rw highres=off  mem=256M ip=192.168.7.2::192.168.7.1:255.255.255.0 console=ttyAMA0,115200 console=tty ' 
+sudo qemu-system-arm -device virtio-net-pci,netdev=net0 -netdev tap,id=net0,ifname=$TAP,script=no,downscript=no \
 -drive file=$diskfile,if=virtio,format=raw -show-cursor -usb -device usb-tablet -device virtio-rng-pci  -machine versatilepb  -m 256  \
--nographic -serial mon:stdio -serial null -kernel $kernel -dtb $dtb -s \
+-nographic -serial mon:stdio -serial null -kernel $kernel -dtb $dtb -gdb tcp::$PORT \
 -append 'root=/dev/vda rw highres=off  mem=256M ip=192.168.7.2::192.168.7.1:255.255.255.0 console=ttyAMA0,115200 console=tty ' 
 fi
