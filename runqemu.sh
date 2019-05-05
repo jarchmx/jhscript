@@ -64,7 +64,8 @@ if [ -z $kernel -o -z $diskfile ];then
     usage
 fi
 
-TAPID=`ifconfig -a | grep tap | wc -l`
+TAPID=`ifconfig -a | grep tap | tail -n 1 | awk '{print $1}' | tr -cd "[0-9]$"`
+let TAPID+=1
 TAP=tap$TAPID
 
 PORT=`sudo netstat  -nap  | grep qemu | grep -v ESTABLISHED | wc -l`
