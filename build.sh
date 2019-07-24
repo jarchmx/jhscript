@@ -1,5 +1,4 @@
 #!/bin/bash
-KNAME=zImage
 KIMAGE=arch/arm/boot/zImage
 PAGE_SIZE=4096
 MASTER_DTB_NAME=masterDTB.4k
@@ -21,8 +20,8 @@ $0 <options ...>
   Global:
     -p <product>
     -v <yocto version>
-  Available products: ar758x/ar759x
-  Available yocto version: 1.7/2.2
+  Available products: ar758x/ar759x/em91
+  Available yocto version: 1.7/2.2/2.7
   Notes:
     Please copy defconfig and INITRAMFS files to the folder $0 run in"
 EOF
@@ -73,6 +72,9 @@ case $VERSION in
     2.2)
         . /opt/swi/y22-ext/environment-setup-armv7a-neon-poky-linux-gnueabi
         ;;
+    2.7)
+        . /opt/swi/y27-ext/environment-setup-armv7at2hf-neon-poky-linux-gnueabi
+        ;;
     ?)
         echo "$0: invalid version -$VERSION" 1>&2
         usage
@@ -99,6 +101,12 @@ elif [ "$PRODUCT" == "ar759x" ] && [ "$VERSION" == "2.2" ];then
     TAG_OFFSET=0x82a00000
     INITRAMFS=./mdm9x40-image-initramfs-swi-mdm9x40-ar759x.cpio
     CMDLINE="console=ttyHSL0,115200 console=ttyHSL1,115200 root=/dev/ram user1_fs=ubifs verity=on fudge_ro_rootfs=false"
+elif [ "$PRODUCT" == "em91" ] && [ "$VERSION" == "2.7" ];then
+    KERNEL_BASE=0x80000000
+    TAG_OFFSET=0x82000000
+    INITRAMFS=./mdm-image-initramfs-swi-sdx55.cpio
+    CMDLINE="root=/dev/ram rootfs_ro=true console=ttyMSM0,115200 verity=off androidboot.hardware=qcom msm_rtb.filter=0x237 androidboot.console=ttyMSM0 lpm_levels.sleep_disabled=1 firmware_class.path=/lib/firmware/updates service_locator.enable=1 net.ifnames=0"
+    KIMAGE=arch/arm/boot/zImage-dtb
 else
     echo "Wrong product or yocto version"
     usage
@@ -114,10 +122,9 @@ mkdir -p $OUTPUT
 cp $INITRAMFS $OUTPUT
 export LOCALVERSION=
 export EXTRAVERSION=
-[ -f ima-local-ca.x509 ] && cp ima-local-ca.x509 $OUTPUT
 
-#build kernel
 [ ! -f $OUTPUT/.config ] && cp defconfig $OUTPUT/.config
+
 #Fix version magic '3.18.31 preempt mod_unload ARMv7 p2v8 issue.
 touch $SRCDIR/.scmversion
 #ARCH=arm make -C $SRCDIR O=$OUTPUT oldconfig
@@ -131,24 +138,27 @@ ARCH=arm CROSS_COMPILE="ccache arm-poky-linux-gnueabi-" make -j8 -C $SRCDIR CC="
 if [ $? -ne 0 ] ; then exit 1 ; fi
 
 cd $OUTPUT
-cp $KIMAGE .
-if [ $? -ne 0 ] ; then exit 1 ; fi
 
-# Make device tree
-$DTBTOOL arch/arm/boot/dts/qcom/ -s $PAGE_SIZE  -o $MASTER_DTB_NAME -p scripts/dtc/ -v
-if [ $? -ne 0 ] ; then exit 1 ; fi
+if [ "$PRODUCT" != "em91" ];then
+    [ -f ima-local-ca.x509 ] && cp ima-local-ca.x509 $OUTPUT
+    # Make device tree
+    $DTBTOOL arch/arm/boot/dts/qcom/ -s $PAGE_SIZE  -o $MASTER_DTB_NAME -p scripts/dtc/ -v
+    if [ $? -ne 0 ] ; then exit 1 ; fi
 
-# Make boot image which could be fastbooted to the platform
-$MKBOOTIMG --dt $MASTER_DTB_NAME --kernel $KNAME --ramdisk /dev/null --cmdline "$CMDLINE" --pagesize $PAGE_SIZE \
-    --base $KERNEL_BASE --tags-addr $TAG_OFFSET --ramdisk_offset 0x0 --output ./boot.img
-if [ $? -ne 0 ] ; then exit 1 ; fi
-
-# Append "mbn header" and "hash of kernel" to kernel image for data integrity check
-# "mbnhdr_data" is 40bytes mbn header data in hex string format
-mbnhdr_data="06000000030000000000000028000000200000002000000048000000000000004800000000000000"
-# Transfer data from hex string format to binary format "0x06,0x00,0x00,..." and write to a file.
-echo -n $mbnhdr_data | sed 's/\([0-9A-F]\{2\}\)/\\\\\\x\1/gI' | xargs printf > ./boot_mbnhdr
-openssl dgst -sha256 -binary ./boot.img > ./boot_hash
-cat ./boot_mbnhdr ./boot_hash >> ./boot.img
-gen_hash_pad boot_mbnhdr boot_hash boot.img 4096
+    # Make boot image which could be fastbooted to the platform
+    $MKBOOTIMG --dt $MASTER_DTB_NAME --kernel $KIMAGE --ramdisk /dev/null --cmdline "$CMDLINE" --pagesize $PAGE_SIZE \
+        --base $KERNEL_BASE --tags-addr $TAG_OFFSET --ramdisk_offset 0x0 --output ./boot.img
+    if [ $? -ne 0 ] ; then exit 1 ; fi
+    # Append "mbn header" and "hash of kernel" to kernel image for data integrity check
+    # "mbnhdr_data" is 40bytes mbn header data in hex string format
+    mbnhdr_data="06000000030000000000000028000000200000002000000048000000000000004800000000000000"
+    # Transfer data from hex string format to binary format "0x06,0x00,0x00,..." and write to a file.
+    echo -n $mbnhdr_data | sed 's/\([0-9A-F]\{2\}\)/\\\\\\x\1/gI' | xargs printf > ./boot_mbnhdr
+    openssl dgst -sha256 -binary ./boot.img > ./boot_hash
+    cat ./boot_mbnhdr ./boot_hash >> ./boot.img
+    gen_hash_pad boot_mbnhdr boot_hash boot.img 4096
+else
+    $MKBOOTIMG --kernel $KIMAGE --ramdisk /dev/null --cmdline "$CMDLINE" --board swi-sdx55 --base $KERNEL_BASE \
+        --pagesize $PAGE_SIZE --tags-addr $TAG_OFFSET --ramdisk_offset 0x0 --output ./boot.img
+fi
 rm -f $SRCDIR/.scmversion
