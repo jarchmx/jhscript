@@ -40,6 +40,7 @@ do
     esac
 done
 
+
 if [ "$PRODUCT" == "ar758x" ] && [ "$VERSION" == "1.7" ];then
     gdb=/opt/swi/y17-ext/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-gdb
     nm=/opt/swi/y17-ext/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-nm
@@ -70,22 +71,27 @@ else
     usage
 fi
 
-
 local_path=$PWD
 ramdump=$local_path/
 vmlinux=$local_path/vmlinux
 out=$local_path/out
 
+MAINARGS="-v $vmlinux -g $gdb  -n $nm  -j $objdump -a $ramdump -o $out -x  --ipc-debug --print-ipc-logging "
+
 # git clone git://codeaurora.org/quic/la/platform/vendor/qcom-opensource/tools
 ramparse_dir=/home/jarhu/sw/qualcomm/tools/linux-ramdump-parser-v2/
 ########################################################################################
 
-echo "cd $ramparse_dir"
-cd $ramparse_dir
-echo ""
+#echo "cd $ramparse_dir"
+#cd $ramparse_dir
+#echo ""
 
-echo "python ramparse.py -v $vmlinux -g $gdb  -n $nm  -j $objdump -a $ramdump -o $out -x $ARGS"
-python ramparse.py -v $vmlinux -g $gdb  -n $nm  -j $objdump -a $ramdump -o $out -x $ARGS
+echo gdb=$gdb
+echo nm=$nm
+echo objdump=$objdump
+cmd="python $ramparse_dir/ramparse.py $MAINARGS $ARGS"
+echo $cmd
+$cmd
 
 cd $local_path
 echo "out: $out"
