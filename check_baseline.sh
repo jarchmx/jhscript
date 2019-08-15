@@ -58,26 +58,26 @@ do
     case $arg in
     o)
         oldxml=$OPTARG
-        echo "oldxml: $oldxml"
+        #echo "oldxml: $oldxml"
         [ ! -f $oldxml ] && echo "$oldxml not exist" && usage
         ;;
     n)
         newxml=$OPTARG
-        echo "newxml: $newxml"
+        #echo "newxml: $newxml"
         [ ! -f $newxml ] && echo "$newxml not exist" && usage
         ;;
     r)
         repoxml=$OPTARG
-        echo "repoxml: $repoxml"
+        #echo "repoxml: $repoxml"
         [ ! -f $repoxml ] && echo "$repoxml not exist" && usage
         ;;
     t)
         outdir=$OPTARG
-        echo "outdir: $outdir"
+        #echo "outdir: $outdir"
         ;;
     w)
         swiwkdir=$OPTARG
-        echo "swi workspace dir: $swiwkdir"
+        #echo "swi workspace dir: $swiwkdir"
         [ ! -d $swiwkdir/meta-swi ] && echo "$swiwkdir/meta-swi not exist" && usage
         ;;
     ?)
@@ -114,14 +114,14 @@ do
     METAURL="$URL"/$METAPATH
     old_rev=
     new_rev=
-    echo METAURL:$METAURL
+    #echo METAURL:$METAURL
     old_rev=`cat $oldxml  | grep "$meta" | grep -oe "revision=\S*" | awk -F'"' '{print $2}'`
     new_rev=`cat $newxml  | grep "$meta" | grep -oe "revision=\S*" | awk -F'"' '{print $2}'`
     if [[ -z $old_rev || -z $new_rev ]];then
         echo "Missing rev, old_rev:$old_rev, new_rev:$new_rev for $meta"
         exit 1
     fi
-    git clone $METAURL $tmpdir/$meta
+    git clone $METAURL $tmpdir/$meta &>/dev/null
     if [ $? -ne 0 ];then
         echo "Git clone for $meta fail, please check"
         exit 1
@@ -138,7 +138,7 @@ do
         exit 1
     fi
 
-    git checkout $new_rev
+    git checkout $new_rev &>/dev/null
     if [ $? -ne 0 ];then
         echo "Git checkout for $meta fail, please check"
         exit 1
@@ -153,35 +153,62 @@ do
         for diff_file in `cat $patchfile | grep "^diff --git" | awk '{print $4}'`
         do
             diff_file=${diff_file##b/}
-            echo check $diff_file
+            #echo check $diff_file in $patchfile of $meta
             #echo if it is new file
-            cat $patchfile | grep -A1 "^diff --git" | grep -A1 "$diff_file"  | grep "new file"
+            cat $patchfile | grep -A1 "^diff --git" | grep -A1 "$diff_file"  | grep "new file" &>/dev/null
             if [ $? -eq 0 ];then
-                echo $meta/$diff_file is a new file. | tee -a $resultfile
+                echo -en "\e$tmpdir/$meta/$diff_file\n" >> $maindir/newfile.txt
+                echo -en "$tmpdir/$meta/$diff_file is new file,refer to $outdir/$meta/$patchfile\n" >> $resultfile
                 continue
             fi
 
             #echo if it is deleted file
-            cat $patchfile | grep -A1 "$diff_file"  | grep "deleted file" &>/dev/null
+            cat $patchfile | grep -A1 "^diff --git" | grep -A1 "$diff_file"  | grep "deleted file" &>/dev/null
             if [ $? -eq 0 ];then
-                echo $meta/$diff_file is a deleted file. | tee -a $resultfile
+                echo -en "$tmpdir/$meta/$diff_file\n" >> $maindir/delfile.txt
+                echo -en "$tmpdir/$meta/$diff_file is deleted file,refer to $outdir/$meta/$patchfile\n" >> $resultfile
                 continue
             fi
 
             #is a normal file, should search in swi workspace dir.
             basediff_file=${diff_file##*/}
+            FIND=
             for searchdir in `echo $swiwkdir/meta-*`
             do
-                FIND=`find $searchdir/ -name "$basediff_file" | wc -l`
-                if [ $FIND -gt 0 ];then
-                    echo "$meta/$diff_file should be updated in $swiwkdir" | tee -a $resultfile
-                    break
-                fi
+                FINDTMP=`find $searchdir/ -name "$basediff_file"`
+                [ "x$FINDTMP" != "x" ] && FIND="$FINDTMP $FIND"
             done
+            
+            if [ "x$FIND" != "x" ];then
+                echo -en "$tmpdir/$meta/$diff_file\n" >>$maindir/updatefile.txt
+                echo -en "$tmpdir/$meta/$diff_file updated,refer to $outdir/$meta/$patchfile\n" >> $resultfile
+                echo -en "Should update:\n$FIND\n" >> $resultfile
+            fi
         done
     done
     
     cd $maindir
 done
 
+printf -v list_start '%.0s-' {1..120}
+
+echo -en "Files list summary, please get the details from $resultfile\n"
+echo $list_start
+echo -en "\e[1;32mNew file list:\n"
+cat $maindir/newfile.txt
+echo -en "\e[0m"
+
+
+echo $list_start
+echo -en "\e[1;31mDeleted file list:\n"
+cat $maindir/delfile.txt
+echo -en "\e[0m"
+
+
+echo $list_start
+echo -en "\e[1;33mUpdate file list:\n" 
+cat $maindir/updatefile.txt 
+echo -en "\e[0m"
+
+rm -f $maindir/updatefile.txt $maindir/newfile.txt $maindir/delfile.txt
 
