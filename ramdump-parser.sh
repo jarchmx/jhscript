@@ -14,15 +14,19 @@ $0 <options ...>
   Global:
     -p <product>
     -v <yocto version>
+    -s <os type>
   Available products: ar758x/ar759x/em91
   Available yocto version: 1.7/2.2/2.7
+  Available os type: win/linux
   Notes:
     Please copy defconfig and INITRAMFS files to the folder $0 run in"
 EOF
     exit 1
 }
 
-while getopts "p:v:" arg
+OSTYPE=linux
+
+while getopts "p:v:s:" arg
 do
     case $arg in
     p)
@@ -32,6 +36,10 @@ do
     v)
         VERSION=$OPTARG
         echo "VERSION: $VERSION"
+        ;;
+    s)
+        OSTYPE=$OPTARG
+        echo "OS Type: $OSTYPE"
         ;;
     ?)
         echo "$0: invalid option -$OPTARG" 1>&2
@@ -68,6 +76,15 @@ elif [ "$PRODUCT" == "em91" ] && [ "$VERSION" == "2.7" ];then
     ARGS="--force-hardware sdxprairie "
 else
     echo "Wrong product or yocto version"
+    usage
+fi
+
+if [ $OSTYPE == "win" ];then
+    ARGS="$ARGS --t32-host-system Windows"
+elif [ $ $OSTYPE == "linux" ];then
+    ARGS="$ARGS --t32-host-system Linux"
+else
+    echo "Wrong os type:$OSTYPE"
     usage
 fi
 

@@ -53,7 +53,7 @@ check_missing()
     return 1
 }
 
-while getopts "o:n:r:t:w:" arg
+while getopts "o::n:r:t:w:" arg
 do
     case $arg in
     o)
@@ -157,7 +157,7 @@ do
             #echo if it is new file
             cat $patchfile | grep -A1 "^diff --git" | grep -A1 "$diff_file"  | grep "new file" &>/dev/null
             if [ $? -eq 0 ];then
-                echo -en "\e$tmpdir/$meta/$diff_file\n" >> $maindir/newfile.txt
+                echo -en "$tmpdir/$meta/$diff_file\n" >> $maindir/newfile.txt
                 echo -en "$tmpdir/$meta/$diff_file is new file,refer to $outdir/$meta/$patchfile\n" >> $resultfile
                 continue
             fi
@@ -180,9 +180,11 @@ do
             done
             
             if [ "x$FIND" != "x" ];then
+                echo "-------------------------------------------------------------------------------------------" >>$resultfile
                 echo -en "$tmpdir/$meta/$diff_file\n" >>$maindir/updatefile.txt
                 echo -en "$tmpdir/$meta/$diff_file updated,refer to $outdir/$meta/$patchfile\n" >> $resultfile
                 echo -en "Should update:\n$FIND\n" >> $resultfile
+                echo "============================================================================================" >>$resultfile
             fi
         done
     done

@@ -40,6 +40,7 @@ prepare_ubi_ps() {
         image_path="$outdir/mdm-image-minimal-swi-sdx55.rootfs.${image_type}"
 
         create_ubinize_config ${ubinize_cfg} ${image_type}
+        sync
 
         ubi_path="$outdir/mdm-image-minimal-swi-sdx55.${rootfs_type}.${page_size}.ubi"
         create_ubi_image $page_size $ubinize_cfg $ubi_path $ubi_link_path
@@ -102,32 +103,6 @@ create_ubinize_config() {
 			let vid+=1
         fi
     fi
-	
-    echo \[usrfs_volume\] >> $cfg_path
-    echo mode=ubi >> $cfg_path
-    #echo image="${OUTPUT_FILE_USR_UBIFS}" >> $cfg_path
-    echo vol_id=$vid >> $cfg_path
-    echo vol_type=dynamic >> $cfg_path
-    echo vol_name=usrfs >> $cfg_path
-    #echo vol_flags = autoresize >> $cfg_path
-    echo vol_size="6MiB"  >>$cfg_path
-    let vid+=1
-
-    echo \[cache_volume\] >> $cfg_path
-    echo mode=ubi >> $cfg_path
-    echo vol_id=$vid >> $cfg_path
-    echo vol_type=dynamic >> $cfg_path
-    echo vol_name=cachefs >> $cfg_path
-    echo vol_size="6MiB" >> $cfg_path
-    let vid+=1
-
-    echo \[systemrw_volume\] >> $cfg_path
-    echo mode=ubi >> $cfg_path
-    echo vol_id=$vid >> $cfg_path
-    echo vol_type=dynamic >> $cfg_path
-    echo vol_name=systemrw >> $cfg_path
-    echo vol_size="6MiB" >> $cfg_path
-    let vid+=1
 }
 
 create_ubi_image() {
@@ -163,7 +138,7 @@ create_ubi_image() {
 do_image_fs() {
     rootfs_type=$1
     if [ -d $rootfs/.git ];then
-        mv $rootfs/.git .
+        mv $rootfs/.git .git.bak
     fi
     if [ $rootfs_type == "squashfs" ];then
         #fakeroot mksquashfs $rootfs $outdir/mdm-image-minimal-swi-sdx55.rootfs.$rootfs_type -comp xz -noappend
@@ -172,8 +147,8 @@ do_image_fs() {
         fakeroot /usr/sbin/mkfs.ubifs -r $rootfs -o $outdir/mdm-image-minimal-swi-sdx55.rootfs.$rootfs_type -m 4096 -e 253952 -c 2146 -F
     fi
 
-    if [ -d .git ];then
-        mv .git $rootfs/
+    if [ -d .git.bak ];then
+        mv .git.bak $rootfs/.git
     fi
 }
 
