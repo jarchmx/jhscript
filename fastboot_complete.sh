@@ -8,11 +8,14 @@ $0 <options ...>
 
   Global:
     -w <workspace dir>
+    -p  pcie image
 EOF
     exit 1
 }
 
-while getopts "w:" arg
+pcie_flag=0
+
+while getopts "w:p" arg
 do
     case $arg in
     w)
@@ -21,6 +24,9 @@ do
         [ -z $WORKSPACE ] && usage
         [ ! -d $WORKSPACE ] && usage
         [ ! -d $WORKSPACE/build_src ] && usage
+        ;;
+    p)
+        pcie_flag=1
         ;;
     ?)
         echo "$0: invalid option -$OPTARG" 1>&2
@@ -54,8 +60,13 @@ echo "fastboot erase qhee && fastboot flash qhee $WORKSPACE/sdx55/SDX55_tz/trust
 fastboot erase qhee && fastboot flash qhee $WORKSPACE/sdx55/SDX55_tz/trustzone_images/build/ms/bin/EATAANBA/hyp.mbn
 [ $? -ne 0 ] && exit 1
 
-echo "fastboot erase sbl && fastboot flash sbl $WORKSPACE/sdx55/SDX55_boot/boot_images/build/ms/bin/sdx55/nand/sbl1.mbn"
-fastboot erase sbl && fastboot flash sbl $WORKSPACE/sdx55/SDX55_boot/boot_images/build/ms/bin/sdx55/nand/sbl1.mbn
+if [ $pcie_flag -eq 1 ];then
+    img=$WORKSPACE/sdx55/SDX55_boot/boot_images/build/ms/bin/sdx55/nand_pcie/sbl1.mbn
+else
+    img=$WORKSPACE/sdx55/SDX55_boot/boot_images/build/ms/bin/sdx55/nand/sbl1.mbn
+fi
+echo "fastboot erase sbl && fastboot flash sbl $img"
+fastboot erase sbl && fastboot flash sbl $img
 [ $? -ne 0 ] && exit 1
 
 echo "fastboot erase sec && fastboot flash sec $WORKSPACE/sdx55/common/config/sec/sec.elf"
