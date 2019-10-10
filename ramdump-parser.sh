@@ -93,7 +93,8 @@ ramdump=$local_path/
 vmlinux=$local_path/vmlinux
 out=$local_path/out
 
-MAINARGS="-v $vmlinux -g $gdb  -n $nm  -j $objdump -a $ramdump -o $out -x  --ipc-debug --print-ipc-logging "
+#MAINARGS="-v $vmlinux -g $gdb  -n $nm  -j $objdump -a $ramdump -o $out -x --everything --32-bit --ipc-debug --print-ipc-logging "
+MAINARGS="-v $vmlinux -g $gdb  -n $nm  -j $objdump -a $ramdump -o $out -x --everything --ipc-debug --print-ipc-logging "
 
 # git clone git://codeaurora.org/quic/la/platform/vendor/qcom-opensource/tools
 ramparse_dir=/home/jarhu/sw/qualcomm/tools/linux-ramdump-parser-v2/
