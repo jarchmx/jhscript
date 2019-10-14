@@ -81,7 +81,7 @@ fi
 
 if [ $OSTYPE == "win" ];then
     ARGS="$ARGS --t32-host-system Windows"
-elif [ $ $OSTYPE == "linux" ];then
+elif [ $OSTYPE == "linux" ];then
     ARGS="$ARGS --t32-host-system Linux"
 else
     echo "Wrong os type:$OSTYPE"
