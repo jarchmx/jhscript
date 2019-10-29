@@ -18,14 +18,16 @@ key=$3
 
 sign_opt="-pkeyopt digest:$type -pkeyopt rsa_padding_mode:pkcs1"
 
-cp $img $img.nonsecure
-openssl dgst -$type -binary $img.nonsecure > $img.$type
+#cp $img $img.nonsecure
+openssl dgst -$type -binary $img > $img.$type
 openssl pkeyutl -sign -in $img.$type -inkey $key -out $img.sig $sign_opt
 
 dd if=/dev/zero of=$img.sig.padded bs=2048 count=1
 dd if=$img.sig of=$img.sig.padded conv=notrunc
-cat $img.nonsecure $img.sig.padded > $img.secure
+cat $img $img.sig.padded > $img.secure
 
+echo "Using this command to extract pub key"
+echo "openssl x509 -outform PEM -in $key.pem -pubkey -out $key.crt >$key.pub"
 echo "Using the below command to verify"
 echo "openssl pkeyutl -verify  -in $img.$type  -sigfile $img.sig  -pubin -inkey $key.pub $sign_opt"
 echo "openssl pkeyutl -verify  -in $img.$type  -sigfile $img.sig -inkey $key $sign_opt"
