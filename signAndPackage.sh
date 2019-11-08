@@ -82,6 +82,7 @@ sign_img()
 		base="secelf"
 	fi
 
+    echo "Sign command: python $sectool secimage -s -i $img -c $seccfg -sa $secargs -o $outdir"
     python $sectool secimage -s -i $img -c $seccfg -sa $secargs -o $outdir
     [ $? -ne 0 ] && echo "Sign $image fail" && exit 1	
 		
@@ -200,6 +201,7 @@ cp NON-HLOS.ubi $WORKSPACE/sdx55/common/build/nand/
 
 #check md5sum of workspace and outdir.
 cd -
+#cat sign.log | grep ^Process | awk -F: '{print $2}' >files
 for file in `cat sign.log | grep ^Process | awk -F: '{print $2}'` ; do basename=`basename $file` ; \
 [ $basename == "qdsp6sw.mbn" ] && basename=modem.mbn ;sfile=`find . -name "$basename"` ; md5sum $file $sfile ; done
 md5sum $outdir/nand/NON-HLOS.ubi $WORKSPACE/sdx55/common/build/nand/NON-HLOS.ubi
