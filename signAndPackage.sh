@@ -23,7 +23,8 @@ sdx55/SDX55_wlan_hst/wlan_proc/wlan/phyrf_svc/tools/bdfUtil/device/bdf/qca639x/b
 sdx55/SDX55_wlan_hst/wlan_proc/wlan/subsys/phyucode_binary/image_hastings/m3.bin \
 sdx55/SDX55_wlan_hst/wlan_proc/wlan/phyrf_svc/tools/bdfUtil/device/bdf/qca639x/bdwlan.e03 \
 sdx55/SDX55_wlan_hst/wlan_proc/wlan/phyrf_svc/tools/bdfUtil/device/bdf/qca639x/bdwlan.e04 \
-sdx55/SDX55_wlan_hst/wlan_proc/wlan/phyrf_svc/tools/bdfUtil/device/bdf/qca639x/bdwlan.e05"
+sdx55/SDX55_wlan_hst/wlan_proc/wlan/phyrf_svc/tools/bdfUtil/device/bdf/qca639x/bdwlan.e05 \
+sdx55/SDX55_tz/trustzone_images/build/ms/bin/EATAANBA/fuseApp32.mbn "
 
 usage()
 {
@@ -80,10 +81,13 @@ sign_img()
 		basename="modem.mbn"
 	elif [ $basename == "sec.elf" ];then	
 		base="secelf"
+	elif [ $basename == "prog_firehose_sdx55.mbn" ];then
+		base="prog_firehose"
+        secargs="-g prog_firehose"
 	fi
 
-    echo "Sign command: python $sectool secimage -s -i $img -c $seccfg -sa $secargs -o $outdir"
-    python $sectool secimage -s -i $img -c $seccfg -sa $secargs -o $outdir
+    echo "Sign command: python $sectool secimage -s -i $img -c $seccfg -sa $secargs -o $outdir -v"
+    python $sectool secimage -s -i $img -c $seccfg -sa $secargs -o $outdir  -v
     [ $? -ne 0 ] && echo "Sign $image fail" && exit 1	
 		
 	#override the origin files with new signed file.	
@@ -135,17 +139,23 @@ fi
 [ -z $outdir ] && outdir=outdir
 
 
-
+rm -rf $outdir
 mkdir -p $outdir/nand/bin/image
 
 #get the needed sign files list.
-python $sectool secimage -p sdx55 -m $WORKSPACE/sdx55/ --m_gen --m_sign --m_validate --no_op -o $outdir/nand/multi_image/ 2>&1 | tee sign.log
+python $sectool secimage -c $seccfg -m $WORKSPACE/sdx55/ --m_gen --m_sign --m_validate --no_op -o $outdir/nand/multi_image/ 2>&1 | tee sign.log
 [ $? -ne 0 ] && exit 1
 
 sign_files=`cat sign.log | grep ^Processing  | awk -F: '{print $2}'`
 #rm -f sign.log
 #Added sec.elf to sign_files list.
 sign_files="$sign_files  $WORKSPACE/sdx55/common/config/sec/sec.elf"
+#added prog_firehose_sdx55.mbn.
+sign_files="$sign_files  $WORKSPACE/sdx55/SDX55_boot/boot_images/build/ms/bin/sdx55/devprg/prog_firehose_sdx55.mbn"
+#added prog_firehose_sdx55.mbn.
+sign_files="$sign_files  $WORKSPACE/sdx55/SDX55_tz/trustzone_images/build/ms/bin/EATAANBA/fuseApp32.mbn"
+
+echo $sign_files >sign.files
 for file in $sign_files
 do
 	echo "Signing : $file"
@@ -154,13 +164,13 @@ done
 
 #generate the multi image with re-signed files.
 rm -rf $outdir/nand/multi_image/
-python $sectool secimage -p sdx55 -m $WORKSPACE/sdx55/ --m_gen --m_sign --m_validate --no_op -o $outdir/nand/multi_image/
+python $sectool secimage -c $seccfg -m $WORKSPACE/sdx55/ --m_gen --m_sign --m_validate --no_op -o $outdir/nand/multi_image/ -v
 [ $? -ne 0 ] && exit 1
 cp $outdir/nand/multi_image/sdx55/multi_image/multi_image.mbn $WORKSPACE/sdx55/common/build/nand/multi_image.mbn
 [ $? -ne 0 ] && exit 1
 
 #generate debugpolicy image and sign
-python $sectool debugpolicy -p sdx55 -gsa -i dbgp_ap -o $outdir/nand/apdp/
+python $sectool debugpolicy -c $secdir/config/sdx55/sdx55_debugpolicy.xml -e $seccfg -gsa -i dbgp_ap -o $outdir/nand/apdp/ -v
 [ $? -ne 0 ] && exit 1
 cp $outdir/nand/apdp/apdp.mbn  $WORKSPACE/sdx55/common/build/nand/apdp/
 [ $? -ne 0 ] && exit 1
@@ -202,8 +212,11 @@ cp NON-HLOS.ubi $WORKSPACE/sdx55/common/build/nand/
 #check md5sum of workspace and outdir.
 cd -
 #cat sign.log | grep ^Process | awk -F: '{print $2}' >files
-for file in `cat sign.log | grep ^Process | awk -F: '{print $2}'` ; do basename=`basename $file` ; \
+#for file in `cat sign.log | grep ^Process | awk -F: '{print $2}'` ; do basename=`basename $file` ; \
+for file in `cat sign.files` ; do basename=`basename $file` ; \
 [ $basename == "qdsp6sw.mbn" ] && basename=modem.mbn ;sfile=`find . -name "$basename"` ; md5sum $file $sfile ; done
 md5sum $outdir/nand/NON-HLOS.ubi $WORKSPACE/sdx55/common/build/nand/NON-HLOS.ubi
 md5sum $outdir/nand/multi_image/sdx55/multi_image/multi_image.mbn $WORKSPACE/sdx55/common/build/nand/multi_image.mbn
 md5sum $outdir/nand/apdp/apdp.mbn  $WORKSPACE/sdx55/common/build/nand/apdp/apdp.mbn
+
+rm -f sign.files sign.log
