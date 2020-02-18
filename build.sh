@@ -73,7 +73,7 @@ case $VERSION in
         . /opt/swi/y22-ext/environment-setup-armv7a-neon-poky-linux-gnueabi
         ;;
     2.7)
-        . /opt/swi/y27-ext/environment-setup-armv7at2hf-neon-poky-linux-gnueabi
+        . /opt/swi/y27-ext/environment-setup-armv7ahf-neon-poky-linux-gnueabi
         ;;
     ?)
         echo "$0: invalid version -$VERSION" 1>&2
