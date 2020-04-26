@@ -127,7 +127,7 @@ create_ubi_image() {
         ;;
     esac
 
-    /home/jarhu/work/em91/em919x/build_src/tmp/work/swi_sdx55-poky-linux-gnueabi/mdm-image-minimal/1.0-r0.0/recipe-sysroot-native/usr/sbin/ubinize -o $ubi_path $ubinize_args $ubinize_cfg
+    /home/jarhu/work/Ferrari_EM9190/em91_tag/build_src/tmp/work/swi_sdx55-poky-linux-gnueabi/mdm-image-minimal/1.0-r0.0/recipe-sysroot-native/usr/sbin/ubinize -o $ubi_path $ubinize_args $ubinize_cfg
 
     if [ -n "$ubi_link_path" ]; then
         rm -f $ubi_link_path
