@@ -72,7 +72,15 @@ b01size=$(stat -c %s $sign_seg)
 cc_skip=`expr $b01size - 6144`
 dd if=$sign_seg of=cc.bin bs=1 skip=$cc_skip
 sig_skip=`expr $cc_skip - 104`
-dd if=$sign_seg of=sig bs=1 skip=$sig_skip count=103
+dd if=$sign_seg of=sig.tmp bs=1 skip=$sig_skip count=104
+dd if=sig.tmp of=sig.size bs=1 skip=1 count=1
+#get the signature size.
+sig_size=`cat sig.size | od -An -t dC`
+sig_size=`expr $sig_size + 2`
+
+dd if=$sign_seg of=sig bs=1 skip=$sig_skip count=$sig_size
+rm -f sig.size sig.tmp
+
 dd if=$sign_seg of=sign_data bs=1 count=$sig_skip
 openssl dgst -sha384 -binary sign_data >hash
 
