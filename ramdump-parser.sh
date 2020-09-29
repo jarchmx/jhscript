@@ -74,6 +74,11 @@ elif [ "$PRODUCT" == "em91" ] && [ "$VERSION" == "2.7" ];then
     nm=/opt/swi/y27-ext/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-nm
     objdump=/opt/swi/y27-ext/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-objdump
     ARGS="--force-hardware sdxprairie "
+elif [ "$PRODUCT" == "c61xx" ] && [ "$VERSION" == "2.7" ];then
+    gdb=/opt/askey/c6xx/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-gdb
+    nm=/opt/askey/c6xx/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-nm
+    objdump=/opt/askey/c6xx/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-objdump
+    ARGS="--force-hardware sdxprairie "
 else
     echo "Wrong product or yocto version"
     usage
@@ -97,7 +102,7 @@ out=$local_path/out
 MAINARGS="-v $vmlinux -g $gdb  -n $nm  -j $objdump -a $ramdump -o $out -x --everything --ipc-debug --print-ipc-logging "
 
 # git clone git://codeaurora.org/quic/la/platform/vendor/qcom-opensource/tools
-ramparse_dir=/home/jarhu/sw/qualcomm/tools/linux-ramdump-parser-v2/
+ramparse_dir=/home/${USER}/sw/qualcomm/tools/linux-ramdump-parser-v2/
 ########################################################################################
 
 #echo "cd $ramparse_dir"
