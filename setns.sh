@@ -25,7 +25,7 @@ peer="$prefix".2/24
 
 ip netns add clt_$netnsid
 
-ip link add veth$netnsid type veth peer name veth1
+ip link add veth$netnsid type veth peer name pveth$netnsid
 
 
 ip addr add $ipaddr/24 dev veth$netnsid
@@ -33,11 +33,11 @@ ip link set dev veth$netnsid up
 #ip route add $net dev veth$netnsid
 
 
-ip link set dev veth1 netns clt
-ip netns exec clt ip link set dev veth1 name eth0
-ip netns exec clt ip addr add $peer dev eth0
-ip netns exec clt ip link set dev eth0 up
-ip netns exec clt ip route add default dev eth0 via $ipaddr
+ip link set dev pveth$netnsid netns clt_$netnsid
+ip netns exec clt_$netnsid ip link set dev pveth$netnsid name eth0
+ip netns exec clt_$netnsid ip addr add $peer dev eth0
+ip netns exec clt_$netnsid ip link set dev eth0 up
+ip netns exec clt_$netnsid ip route add default dev eth0 via $ipaddr
 
 #iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 
