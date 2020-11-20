@@ -74,11 +74,11 @@ elif [ "$PRODUCT" == "em91" ] && [ "$VERSION" == "2.7" ];then
     nm=/opt/swi/y27-ext/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-nm
     objdump=/opt/swi/y27-ext/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-objdump
     ARGS="--force-hardware sdxprairie "
-elif [ "$PRODUCT" == "c61xx" ] && [ "$VERSION" == "2.7" ];then
-    gdb=/opt/askey/c6xx/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-gdb
-    nm=/opt/askey/c6xx/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-nm
-    objdump=/opt/askey/c6xx/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-objdump
-    ARGS="--force-hardware sdxprairie "
+elif [ "$PRODUCT" == "c6xx" ] && [ "$VERSION" == "2.7" ];then
+    gdb=/opt/askey/c6xx/sysroots/x86_64-oesdk-linux/usr/bin/arm-oe-linux-gnueabi/arm-oe-linux-gnueabi-gdb
+    nm=/opt/askey/c6xx/sysroots/x86_64-oesdk-linux/usr/bin/arm-oe-linux-gnueabi/arm-oe-linux-gnueabi-nm
+    objdump=/opt/askey/c6xx/sysroots/x86_64-oesdk-linux/usr/bin/arm-oe-linux-gnueabi/arm-oe-linux-gnueabi-objdump
+    #ARGS="--force-hardware sdxprairie "
 else
     echo "Wrong product or yocto version"
     usage
