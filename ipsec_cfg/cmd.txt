@@ -1,0 +1,25 @@
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+iptables -t nat -A POSTROUTING -s 10.1.1.0/24 -o eth0 -j MASQUERADE
+
+iptables -A FORWARD -s 10.1.1.0/24 -j ACCEPT
+
+ipsec pki --gen --type rsa --size 4096 --outform pem >ca-key.pem
+ipsec pki --self --ca --lifetime 3650 --in ca-key.pem --type rsa --dn "CN=VPN ASKEY CA" --outform pem >ca-cert.pem
+ipsec pki --gen --type rsa --size 4096 --outform pem >moon.pem
+ipsec pki --pub --in moon.pem --type rsa --outform pem >moon.pub.pem
+ipsec pki --pub --in moon.pem --type rsa | ipsec pki --issue --lifetime 1825 --cacert ca-cert.pem --cakey ca-key.pem --dn "CN=askey" --san "askey.com" --flag serverAuth --flag ikeIntermediate --outform pem >moon-cert.pem
+ipsec pki --gen --type rsa --size 4096 --outform pem >sun.pem
+ipsec pki --pub --in sun.pem --type rsa | ipsec pki --issue --lifetime 1825 --cacert ca-cert.pem  --cakey ca-key.pem --dn "CN=askey" --san "askey.com" --flag serverAuth --flag ikeIntermediate --outform pem >sun-cert.pem
+ipsec pki --pub --in sun.pem --type rsa --outform pem >sun.pub.pem
+
+cp ca-key.pem /etc/ipsec.d/private/
+cp ca-cert.pem /etc/ipsec.d/cacerts/
+cp sun.pub.pem /etc/ipsec.d/certs/
+cp moon.pub.pem /etc/ipsec.d/certs/
+
+on moon:
+cp moon.pem /etc/ipsec.d/private/
+
+on sun:
+cp sun.pem /etc/ipsec.d/private/ 
