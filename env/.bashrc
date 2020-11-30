@@ -178,6 +178,7 @@ alias fr2='fastboot oem swi-set-ssid 222 && fastboot reboot'
 alias fe='fastboot erase'
 alias frfs='fastboot flash system'
 alias fu='fastboot oem keep-alive && fastboot oem flash-unlock aepa1du5vae1fahb9enohchie+Neer5t'
+alias mountsc='mkdir sc_work; sudo mount -t nfs lsdk_srv:/home/jarch_hu/sc_work sc_work'
 
 #alias fn='find . -iname '
 alias gn='grep -nr'
