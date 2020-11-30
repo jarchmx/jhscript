@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<list key="workingset_selection_history">
+		<item value="mdm9x40_17"/>
+		<item value="mdm9x40_22"/>
+	</list>
+	<section name="WorkbenchPreferenceDialogSettings">
+		<item key="DIALOG_X_ORIGIN" value="828"/>
+		<item key="DIALOG_Y_ORIGIN" value="8"/>
+	</section>
+	<section name="org.eclipse.ui.preferences.keysPreferencePage">
+		<item key="actionSetFilter" value="true"/>
+		<item key="uncategorizedFilter" value="true"/>
+		<item key="internalFilter" value="true"/>
+	</section>
+	<section name="org.eclipse.ui.internal.QuickAccess">
+		<item key="dialogHeight" value="959"/>
+		<item key="dialogWidth" value="1161"/>
+		<list key="textEntries">
+			<item value="1"/>
+		</list>
+		<list key="orderedElements">
+			<item value="org.eclipse.ui.ToggleCoolbarAction"/>
+		</list>
+		<list key="orderedProviders">
+			<item value="org.eclipse.ui.commands"/>
+		</list>
+		<list key="textArray">
+			<item value="main"/>
+		</list>
+	</section>
+	<section name="NewWizardAction">
+	</section>
+	<section name="InstallationDialogSettings">
+		<item key="DIALOG_WIDTH" value="706"/>
+		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>
+		<item key="DIALOG_HEIGHT" value="744"/>
+		<item key="DIALOG_X_ORIGIN" value="-79"/>
+		<item key="DIALOG_Y_ORIGIN" value="-211"/>
+	</section>
+	<section name="org.eclipse.ui.internal.dialogs.WorkbenchEditorsDialog">
+		<item key="sort" value="0"/>
+		<item key="allPersp" value="false"/>
+		<list key="columns">
+			<item value="252"/>
+			<item value="504"/>
+		</list>
+		<list key="bounds">
+			<item value="1927"/>
+			<item value="157"/>
+			<item value="798"/>
+			<item value="553"/>
+		</list>
+	</section>
+</section>

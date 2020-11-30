@@ -1,0 +1,17 @@
+version: "3"
+
+# More info at https://github.com/oracle/opengrok/docker/
+services:
+  opengrok:
+    container_name: opengrok
+    image: opengrok/docker:latest
+    ports:
+      - "8080:8080/tcp"
+    environment:
+      REINDEX: '600000000'
+    # Volumes store your data between container upgrades
+    volumes:
+      - '/home/jarch_hu/:/home/jarch_hu'  # source code
+      - '/home/jarch_hu/opengrok/src/:/opengrok/src/'  # source code
+      - '/home/jarch_hu/opengrok/etc/:/opengrok/etc/'  # folder contains configuration.xml
+      - '/home/jarch_hu/opengrok/data/:/opengrok/data/'  # index and other things for source code

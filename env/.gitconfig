@@ -2,8 +2,8 @@
     email = jarch_hu@askey.com
     name = Jarch
 [core]
-    #editor = vim
-    editor = emacs
+    editor = vim
+    #editor = emacs
     autocrlf = input
 
 [alias]
