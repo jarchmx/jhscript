@@ -1,7 +1,6 @@
 #! /bin/sh
 
-export REMOTE_HOST=10.8.18.182
-
+export REMOTE_HOST=${REMOTE_HOST:-"10.8.18.182"}
 
 cfg_tap()
 {
