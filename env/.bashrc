@@ -114,7 +114,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export PATH=/opt/usr/bin/eclipse:/opt/usr/bin/:$PATH:/sbin/:/home/$USER/usr/bin/:/home/$USER/usr/bin/arscript/:/home/$USER/bin
+export PATH=/opt/usr/bin/eclipse:/opt/usr/bin/:$PATH:/sbin/:/home/$USER/usr/bin/:/home/$USER/jhscript/:/home/$USER/bin
 
 #for adb/fastboot.exe
 export PATH=$PATH:/mnt/e/sw/android/adb_new/
@@ -206,6 +206,5 @@ ARCH=`uname -m`
 tmux ls &>/dev/null
 [ $? -ne 0 ] && tmux-session restore 
 
-szgerrit=cnshz-er-git01
 #docker-compose -f ~/cfg/docker/docker-compose.yml up -d
 

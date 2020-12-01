@@ -1,0 +1,173 @@
+#!/bin/bash
+
+
+PROG=`basename $0`
+
+usage()
+{
+    cat << EOF
+Usage:
+$PROG <command> <subcommand> <option>
+------------------------------
+$PROG stash
+             list 
+             apply [-m 'message' ]
+             push [-m 'message' ]
+      clean
+------------------------------         
+EOF
+    exit 1
+}
+
+get_repo_list()
+{
+    if [ ! -d .repo ];then
+        echo "Please run $PROG under project directory with .repo" 
+        exit 1
+    fi
+
+    PROJLST=`repo list | awk -F':' '{print $1}' `
+
+}
+
+stash_apply()
+{
+    shift 1
+
+    while getopts "m:" arg
+    do
+        case $arg in
+        m)
+            shift 
+            message="$*"
+            echo "message: $message"
+            ;;
+        *)
+            echo "$0: invalid option -$OPTARG" 1>&2
+            usage
+            ;;
+        esac
+    done
+
+    if [[ -z $message ]];then
+        echo "Should specify -m."
+        usage
+    fi
+    get_repo_list
+    
+    for n in $PROJLST
+    do
+        cd $n 
+        [ $? -ne 0 ] && continue
+        rm -f /tmp/repoex.tmp
+        git stash  list | grep "$message" >/tmp/repoex.tmp
+        if [ $? -eq 0 ];then
+            SID=`cat /tmp/repoex.tmp | awk -F: '{print $1}'`
+            echo "stash apply $message for $n"
+            echo git stash apply $SID for $n
+            git stash apply $SID
+            echo '------------------------------------'
+        fi
+        cd - &>/dev/null
+    done
+
+}
+
+stash_push()
+{
+    shift 1
+
+    while getopts "m:" arg
+    do
+        case $arg in
+        m)
+            shift 
+            message="$*"
+            echo "message: $message"
+            ;;
+        *)
+            echo "$0: invalid option -$OPTARG" 1>&2
+            usage
+            ;;
+        esac
+    done
+
+    if [[ -z $message ]];then
+        echo "Should specify -m."
+        usage
+    fi
+    get_repo_list
+    
+    for n in $PROJLST
+    do
+        cd $n 
+        [ $? -ne 0 ] && continue
+        num=`git status -s | wc -l`
+        if [ $num -gt 0 ];then
+            echo "stash push $message for $n"
+            git stash push  -a -m "$message" 2>/dev/null
+        fi
+        cd - &>/dev/null
+    done
+
+}
+
+stash()
+{
+    shift 1
+    case "$1" in
+    list)
+        echo "stash list"
+        get_repo_list
+        for n in $PROJLST
+        do
+            cd $n 
+            [ $? -ne 0 ] && continue
+            rm -f /tmp/repoex.tmp
+            git stash  list >/tmp/repoex.tmp 
+            num=`cat /tmp/repoex.tmp | wc -l`
+            if [ $num -gt 0 ];then                
+                echo project: $n 
+                cat /tmp/repoex.tmp
+                echo '------------------------------------'
+            fi
+            cd - &>/dev/null
+        done
+    ;;
+    apply)
+        echo "stash apply"
+        stash_apply $@
+    ;;
+    push)
+        echo "stash push"
+        stash_push $@
+    ;;
+    *)
+    usage
+    esac
+    exit 0
+}
+
+clean()
+{
+    get_repo_list
+    for n in $PROJLST
+    do
+        cd $n 
+        [ $? -ne 0 ] && continue
+        
+        git checkout ./
+        git clean -f -d 
+        cd - &>/dev/null
+    done
+
+}
+
+case "$1" in
+stash|clean)
+  $1 $@
+  ;;
+* )
+  usage
+  exit 1
+esac
