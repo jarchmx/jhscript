@@ -119,7 +119,7 @@ export PATH=/opt/usr/bin/eclipse:/opt/usr/bin/:$PATH:/sbin/:/home/$USER/usr/bin/
 #for adb/fastboot.exe
 export PATH=$PATH:/mnt/e/sw/android/adb_new/
 
-#if ! tmux ls &>/dev/null ;then tmux-session restore &>/dev/null ; fi
+if ! tmux ls &>/dev/null ;then tmux-session restore &>/dev/null ; fi
 
 mc()
 {
@@ -204,8 +204,6 @@ sdx55ld()
 ARCH=`uname -m`
 [[ $ARCH == "x86_64" && -f ~/.fzf.bash ]] && source ~/.fzf.bash
 
-tmux ls &>/dev/null
-[ $? -ne 0 ] && tmux-session restore 
 
-#docker-compose -f ~/cfg/docker/docker-compose.yml up -d
+#docker-compose -f ~/jhscript/cfg/docker/docker-compose.yml up -d
 
