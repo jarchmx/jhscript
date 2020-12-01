@@ -28,3 +28,12 @@ services:
     # Volumes store your data between container upgrades
     volumes:
       - '/home/$USER/jhscript/cfg/docker/dnsmasq.conf:/etc/dnsmasq.conf'  #dnsmasq.conf
+
+  lsdk_1909:
+    container_name: jhu_lsdk
+    image: lsdk_build:v1909
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    # Volumes store your data between container upgrades
+    volumes:
+      - '/home/$USER/:/home/$USER'  # home directory
