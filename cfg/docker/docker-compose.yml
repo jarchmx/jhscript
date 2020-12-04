@@ -3,20 +3,20 @@ version: "3"
 # More info at https://github.com/oracle/opengrok/docker/
 services:
   opengrok:
-    container_name: opengrok
+    container_name: jhu_opengrok
     image: opengrok/docker:latest
     ports:
-      - "8080:8080/tcp"
+      - "8081:8080/tcp"
     environment:
       REINDEX: '600000000'
     # Volumes store your data between container upgrades
     volumes:
-      - '/home/$USER/:/home/$USER'  # source code
-      - '/home/$USER/opengrok/src/:/opengrok/src/'  # source code
-      - '/home/$USER/opengrok/etc/:/opengrok/etc/'  # folder contains configuration.xml
-      - '/home/$USER/opengrok/data/:/opengrok/data/'  # index and other things for source code
+      #- '/home/$USER/:/home/$USER'  # source code
+      - '/home/$USER/sc_work/docker_ws/opengrok/src:/opengrok/src/'  # source code
+      - '/home/$USER/sc_work/docker_ws/opengrok/etc/:/opengrok/etc/'  # folder contains configuration.xml
+      - '/home/$USER/sc_work/docker_ws/opengrok/data/:/opengrok/data/'  # index and other things for source code
   
-  askeysz_dns:
+  dns:
     container_name: jhu_dns
     image: jpillora/dnsmasq:latest
     ports:
@@ -37,3 +37,55 @@ services:
     # Volumes store your data between container upgrades
     volumes:
       - '/home/$USER/:/home/$USER'  # home directory
+      
+  gerrit:
+    container_name: jhu_gerrit
+    image: gerritcodereview/gerrit
+    ports:
+      - "29418:29418"
+      - "8080:8080"
+    depends_on:
+      - ldap
+    volumes:
+      - /home/$USER/sc_work/docker_ws/gerrit/etc:/var/gerrit/etc
+      - /home/$USER/sc_work/docker_ws/gerrit/git:/var/gerrit/git
+      - /home/$USER/sc_work/docker_ws/gerrit/db:/var/gerrit/db
+      - /home/$USER/sc_work/docker_ws/gerrit/index:/var/gerrit/index
+      - /home/$USER/sc_work/docker_ws/gerrit/cache:/var/gerrit/cache
+      #- /home/$USER/sc_work/docker_ws/gerrit/passwd:/etc/passwd #passwd
+      #- /home/$USER/sc_work/docker_ws/gerrit/group:/etc/group  #group
+      #- /gerrit/etc:/var/gerrit/etc
+      #- /gerrit/git:/var/gerrit/git
+      #- /gerrit/db:/var/gerrit/db
+      #- /gerrit/index:/var/gerrit/index
+      #- /gerrit/cache:/var/gerrit/cache
+    environment:
+      - CANONICAL_WEB_URL=http://lsdk_srv:8080 
+    user: 0:0
+    #command: init
+    
+
+  ldap:
+    container_name: jhu_ldap
+    image: osixia/openldap
+    ports:
+      - "389:389"
+      - "636:636"
+    environment:
+      - LDAP_ADMIN_PASSWORD=secret
+    volumes:
+      #- /home/$USER/sc_work/docker_ws/gerrit/passwd:/etc/passwd #passwd
+      #- /home/$USER/sc_work/docker_ws/gerrit/group:/etc/group  #group
+      - /home/$USER/sc_work/docker_ws/gerrit/ldap/var:/var/lib/ldap
+      - /home/$USER/sc_work/docker_ws/gerrit/ldap/etc:/etc/ldap/slapd.d
+      #- /gerrit/ldap/var:/var/lib/ldap
+      #- /gerrit/ldap/etc:/etc/ldap/slapd.d
+    #user: 0:0
+
+  ldap-admin:
+    container_name: jhu_ldap_admin
+    image: osixia/phpldapadmin
+    ports:
+      - "6443:443"
+    environment:
+      - PHPLDAPADMIN_LDAP_HOSTS=ldap
