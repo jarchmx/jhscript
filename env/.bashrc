@@ -204,6 +204,8 @@ sdx55ld()
 ARCH=`uname -m`
 [[ $ARCH == "x86_64" && -f ~/.fzf.bash ]] && source ~/.fzf.bash
 
+export RTE_SDK=/home/jarch_hu/work/dpdk/
+export RTE_TARGET=x86_64-native-linuxapp-gcc
 
 #docker-compose -f ~/jhscript/cfg/docker/docker-compose.yml up -d
 
