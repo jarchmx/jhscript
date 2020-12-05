@@ -114,7 +114,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export PATH=/opt/usr/bin/eclipse:/opt/usr/bin/:$PATH:/sbin/:/home/$USER/usr/bin/:/home/$USER/jhscript/:/home/$USER/bin
+export PATH=/opt/usr/bin/eclipse:/opt/usr/bin/:$PATH:/sbin/:/home/$USER/jhscript/:/home/$USER/jhscript/bin
 
 #for adb/fastboot.exe
 export PATH=$PATH:/mnt/e/sw/android/adb_new/
