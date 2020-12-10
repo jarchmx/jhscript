@@ -1,0 +1,27 @@
+comment {
+	Description: This file is used for vpp startup commands, used by exec|startup-config	
+	Author: Jarch Hu  
+	Date: 2020/12/04	
+}
+
+ipsec select backend esp 1
+set interface ip address UnknownEthernet4 192.168.1.2/24
+set interface state UnknownEthernet4 up
+set ip arp static UnknownEthernet4 192.168.1.1 2c:53:4a:0b:86:2e
+
+ipsec sa add 10 spi 1001 esp crypto-alg aes-cbc-128 crypto-key 4a506a794f574265564551694d653768 integ-alg sha1-96 integ-key 4339314b55523947594d6d3547666b45764e6a58
+
+ipsec sa add 20 spi 1000 esp crypto-alg aes-cbc-128 crypto-key 4a506a794f574265564551694d653768 integ-alg sha1-96 integ-key 4339314b55523947594d6d3547666b45764e6a58
+
+ipsec spd add 1
+set interface ipsec spd UnknownEthernet4 1
+set interface promiscuous on UnknownEthernet4
+ipsec policy add spd 1 priority 10 inbound action protect sa 20 local-ip-range 192.168.1.2 - 192.168.1.2 remote-ip-range 192.168.1.1 - 192.168.1.1
+ipsec policy add spd 1 priority 10 outbound action protect sa 10 local-ip-range 192.168.1.2 - 192.168.1.2 remote-ip-range 192.168.1.1 - 192.168.1.1
+
+comment {ip route add count 1 2.1.1.3/32 via 192.168.100.3 <int1>}
+
+ip route add count 1 192.168.1.0/24 via 192.168.1.2 UnknownEthernet4
+
+ipsec policy add spd 1 priority 100 inbound action bypass protocol 50
+ipsec policy add spd 1 priority 100 outbound action bypass protocol 50
