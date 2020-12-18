@@ -114,7 +114,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export PATH=/opt/usr/bin/eclipse:/opt/usr/bin/:$PATH:/sbin/:/home/$USER/usr/bin/:/home/$USER/jhscript/:/home/$USER/bin
+export PATH=/opt/usr/bin/eclipse:/opt/usr/bin/:$PATH:/sbin/:/home/$USER/jhscript/:/home/$USER/jhscript/bin:/opt/eclipse
 
 #for adb/fastboot.exe
 export PATH=$PATH:/mnt/e/sw/android/adb_new/
@@ -180,6 +180,8 @@ alias frfs='fastboot flash system'
 alias fu='fastboot oem keep-alive && fastboot oem flash-unlock aepa1du5vae1fahb9enohchie+Neer5t'
 alias mountsc='mkdir /home/$USER/sc_work &>/dev/null ; sudo mount -t nfs lsdk_srv:/home/jarch_hu/sc_work /home/$USER/sc_work'
 alias mountms='mkdir /home/$USER/module_srv &>/dev/null ; sudo mount -t nfs bld1-sz:/home/jarch_hu/module_srv /home/$USER/module_srv'
+alias gnome-terminal="gnome-terminal --disable-factory"
+alias eclipse='eclipse &>/dev/null &'
 
 #alias fn='find . -iname '
 alias gn='grep -nr'
@@ -208,5 +210,5 @@ ARCH=`uname -m`
 export RTE_SDK=/home/jarch_hu/work/dpdk/
 export RTE_TARGET=x86_64-native-linuxapp-gcc
 
-#docker-compose -f ~/jhscript/cfg/docker/docker-compose.yml up -d
+#docker-compose -f ~/jhscript/cfg/docker/docker-compose.yml up -d --no-recreate
 
