@@ -52,6 +52,11 @@ services:
       - /home/$USER/sc_work/docker_ws/gerrit/db:/var/gerrit/db
       - /home/$USER/sc_work/docker_ws/gerrit/index:/var/gerrit/index
       - /home/$USER/sc_work/docker_ws/gerrit/cache:/var/gerrit/cache
+      #- /home/gerrit/etc:/var/gerrit/etc
+      #- /home/gerrit/git:/var/gerrit/git
+      #- /home/gerrit/db:/var/gerrit/db
+      #- /home/gerrit/index:/var/gerrit/index
+      #- /home/gerrit/cache:/var/gerrit/cache
       #- /home/$USER/sc_work/docker_ws/gerrit/passwd:/etc/passwd #passwd
       #- /home/$USER/sc_work/docker_ws/gerrit/group:/etc/group  #group
       #- /gerrit/etc:/var/gerrit/etc
@@ -76,8 +81,8 @@ services:
     volumes:
       #- /home/$USER/sc_work/docker_ws/gerrit/passwd:/etc/passwd #passwd
       #- /home/$USER/sc_work/docker_ws/gerrit/group:/etc/group  #group
-      - /home/$USER/sc_work/docker_ws/gerrit/ldap/var:/var/lib/ldap
-      - /home/$USER/sc_work/docker_ws/gerrit/ldap/etc:/etc/ldap/slapd.d
+      - /home/$USER/sc_work/docker_ws/ldap/var:/var/lib/ldap
+      - /home/$USER/sc_work/docker_ws/ldap/etc:/etc/ldap/slapd.d
       #- /gerrit/ldap/var:/var/lib/ldap
       #- /gerrit/ldap/etc:/etc/ldap/slapd.d
     #user: 0:0
@@ -89,3 +94,21 @@ services:
       - "6443:443"
     environment:
       - PHPLDAPADMIN_LDAP_HOSTS=ldap
+
+  #gitlab:
+  #  container_name: jhu_gitlab
+  #  image: 'gitlab/gitlab-ce:13.6.2-ce.0'
+  #  restart: always
+  #  hostname: 'gitlab.askey.com'
+  #  environment:
+  #    GITLAB_OMNIBUS_CONFIG: |
+  #      external_url 'http://10.8.16.124'
+  #      # gitlab_rails['gitlab_shell_ssh_port'] = 8922
+  #  ports:
+  #    - '8943:443'
+  #    - '8980:80'
+  #    - '8922:22'
+  #  volumes:
+  #    - '/home/$USER/sc_work/docker_ws/gitlab/config:/etc/gitlab'
+  #    - '/home/$USER/sc_work/docker_ws/gitlab/logs:/var/log/gitlab'
+  #    - '/home/$USER/sc_work/docker_ws/gitlab/data:/var/opt/gitlab'

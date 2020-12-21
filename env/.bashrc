@@ -195,7 +195,7 @@ export PATH=$PATH:/opt/t32/bin/pc_linux64:/home/$USER/usr/bin/t32scipt/
 export ADOBE_PATH=/opt/Adobe/Reader9/
 export ACROBAT_PATH=/opt/Adobe/Reader9
 
-alias ssh='ssh -X'
+#alias ssh='ssh -X'
 
 sdx55ld()
 {
@@ -210,4 +210,3 @@ export RTE_SDK=/home/jarch_hu/work/dpdk/
 export RTE_TARGET=x86_64-native-linuxapp-gcc
 
 #docker-compose -f ~/jhscript/cfg/docker/docker-compose.yml up -d --no-recreate
-
