@@ -1,3 +1,6 @@
+[commit]
+    #template = /home/jarch_hu/jhscript/env/.commit_message_format
+
 [user]
     email = jarch_hu@askey.com
     name = Jarch
@@ -31,3 +34,5 @@
 [credential]
     username = jarch_hu@askey.com
     helper = store
+[gpg]
+	program = gpg2

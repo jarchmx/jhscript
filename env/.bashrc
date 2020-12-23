@@ -181,6 +181,7 @@ alias fu='fastboot oem keep-alive && fastboot oem flash-unlock aepa1du5vae1fahb9
 alias mountsc='mkdir /home/$USER/sc_work &>/dev/null ; sudo mount -t nfs lsdk_srv:/home/jarch_hu/sc_work /home/$USER/sc_work'
 alias mountms='mkdir /home/$USER/module_srv &>/dev/null ; sudo mount -t nfs bld1-sz:/home/jarch_hu/module_srv /home/$USER/module_srv'
 alias mountwk='mkdir /home/$USER/work &>/dev/null ; sudo mount -t nfs bld1-sz:/home/jarch_hu/work /home/$USER/work'
+alias mountts='mkdir /home/$USER/testsrv &>/dev/null ; sudo mount -t nfs 10.8.18.182:/home/jarch_hu/testsrv /home/$USER/testsrv'
 alias gnome-terminal="gnome-terminal --disable-factory"
 alias eclipse='eclipse &>/dev/null &'
 
@@ -212,3 +213,8 @@ export RTE_SDK=/home/jarch_hu/work/dpdk/
 export RTE_TARGET=x86_64-native-linuxapp-gcc
 
 #docker-compose -f ~/jhscript/cfg/docker/docker-compose.yml up -d --no-recreate
+
+#for gpg sign fail.
+#error: gpg failed to sign the data
+#error: unable to sign the taG
+export GPG_TTY=$(tty)
