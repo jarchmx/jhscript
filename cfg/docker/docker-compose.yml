@@ -38,6 +38,15 @@ services:
     volumes:
       - '/home/$USER/:/home/$USER'  # home directory
       
+  lsdk_2004:
+    container_name: jhu_lsdk2004
+    image: fbubuntu:18.04
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    # Volumes store your data between container upgrades
+    volumes:
+      - '/home/$USER/:/home/$USER'  # home directory
+
   gerrit:
     container_name: jhu_gerrit
     #image: gerritcodereview/gerrit
@@ -126,3 +135,11 @@ services:
     volumes:
       - /home/$USER/sc_work/docker_ws/gerrit/git:/var/www/cgit
 
+  smtp:
+    container_name: jhu_smtp
+    image: namshi/smtp:latest
+    ports:
+      - "587:25"
+    environment:
+      - RELAY_NETWORKS=:10.8.0.0/16
+    restart: always
