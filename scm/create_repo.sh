@@ -1,7 +1,7 @@
 #!/bin/sh
 
 
-export GERRIT_SRV=$USER@gerrit.askey.cn
+export GERRIT_SRV=$USER@10.8.16.158
 export GERRIT_PORT=29418
 
 usage()
@@ -25,6 +25,9 @@ pushd $INDIR &>/dev/null
 SRC_DIR=`pwd`
 popd &>/dev/null
 
+flag=0
+
+set -x
 
 for ori_git in `find $SRC_DIR -name '*.git'`
 do
@@ -38,11 +41,17 @@ do
 
     ssh $GERRIT_SRV -p $GERRIT_PORT gerrit create-project $tgt
     ssh $GERRIT_SRV -p $GERRIT_PORT gerrit set-project-parent --parent mirror-project-permission-base $tgt
+    #echo push heads
     #git push ssh://$GERRIT_SRV:$GERRIT_PORT/$tgt refs/heads/*
+    #echo push remotes
     #git push ssh://$GERRIT_SRV:$GERRIT_PORT/$tgt refs/remotes/*
+    #echo push tags
     #git push ssh://$GERRIT_SRV:$GERRIT_PORT/$tgt refs/tags/*
-    #read
-    
+    #git push --mirror ssh://$GERRIT_SRV:$GERRIT_PORT/$tgt
+    if [ $flag -eq 0 ];then
+        let flag+=1
+        read
+    fi
 done
 
 popd &>/dev/null
