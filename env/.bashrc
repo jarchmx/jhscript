@@ -88,7 +88,6 @@ fi
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
-alias fastboot='fastboot -i 0x1199'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -163,7 +162,7 @@ fn()
 alias ts='tmux switch -t'
 #alias ta='tmux a -t'
 alias tl='tmux ls'
-alias fastboot='fastboot.exe'
+#alias fastboot='fastboot.exe'
 #alias tn='tmux new -s'
 alias ec='setsid eclipse &>/dev/null &'
 alias fs='fastboot flash sierra-dual-system'
@@ -178,9 +177,9 @@ alias fr2='fastboot oem swi-set-ssid 222 && fastboot reboot'
 alias fe='fastboot erase'
 alias frfs='fastboot flash system'
 alias fu='fastboot oem keep-alive && fastboot oem flash-unlock aepa1du5vae1fahb9enohchie+Neer5t'
-alias mountsc='mkdir /home/$USER/sc_work &>/dev/null ; sudo mount -t nfs 10.8.16.124:/home/jarch_hu/sc_work /home/$USER/sc_work'
-alias mountms='mkdir /home/$USER/module_srv &>/dev/null ; sudo mount -t nfs bld1-sz:/home/jarch_hu/module_srv /home/$USER/module_srv'
-alias mountwk='mkdir /home/$USER/work &>/dev/null ; sudo mount -t nfs bld1-sz:/home/jarch_hu/work /home/$USER/work'
+alias mountsc='mkdir /home/$USER/sc_work &>/dev/null ; sudo mount -t nfs fsm_srv:/home/jarch_hu/sc_work /home/$USER/sc_work'
+#alias mountms='mkdir /home/$USER/module_srv &>/dev/null ; sudo mount -t nfs module_srv:/home/jarch_hu/module_srv /home/$USER/module_srv'
+alias mountwk='mkdir /home/$USER/work &>/dev/null ; sudo mount -t nfs module_srv:/home/jarch_hu/work /home/$USER/work'
 alias mountts='mkdir /home/$USER/testsrv &>/dev/null ; sudo mount -t nfs 10.8.18.182:/home/jarch_hu/testsrv /home/$USER/testsrv'
 alias gnome-terminal="gnome-terminal --disable-factory"
 alias eclipse='eclipse &>/dev/null &'
