@@ -1,0 +1,1 @@
+../script/mcu/STM32CubeMX.sh
