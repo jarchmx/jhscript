@@ -19,7 +19,7 @@ INDIR=$1
 
 echo INDIR:$INDIR OUTDIR:$OUTDIR
 
-[ -d $OUTDIR ] && rm -rf $OUTDIR
+#[ -d $OUTDIR ] && rm -rf $OUTDIR
 [ ! -d $OUTDIR ] && mkdir -p $OUTDIR
 
 pushd $INDIR &>/dev/null
@@ -38,15 +38,26 @@ do
     tgt=${tmp%/.git}.git
     
     src=${ori_git%/.git}
-
-    rm -rf $tgt
-    echo git clone --mirror $src $tgt
-    git clone --mirror $src $tgt &>/dev/null
-
+    
     cd $src &>/dev/null
     url=`git remote get-url $(git remote)`
     cd - &>/dev/null
-    
+
+    #rm -rf $tgt
+
+    #continue if $tgt exist.
+    [ -d $tgt ] && continue
+
+    #clone from src url.
+    echo git clone --mirror $url $tgt
+    git clone --mirror $url $tgt
+
+    continue
+
+    #clone from local file
+    echo git clone --mirror $src $tgt
+    git clone --mirror $src $tgt &>/dev/null
+
     cd $tgt &>/dev/null
 
     #echo "Before remote update"
@@ -54,8 +65,8 @@ do
     echo "update $tgt from $url"
     git remote remove $(git remote)
     #remove local branches.
-    bns=`git branch | tr -d '\*'` 
-    git branch -D $bns;
+    #bns=`git branch | tr -d '\*'` 
+    #git branch -D $bns;
     
     git remote add origin $url
     git remote update

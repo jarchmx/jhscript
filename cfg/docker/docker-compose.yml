@@ -38,6 +38,15 @@ services:
     volumes:
       - '/home/$USER/:/home/$USER'  # home directory
       
+  lsdk_2004:
+    container_name: jhu_lsdk2004
+    image: fbubuntu:18.04
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    # Volumes store your data between container upgrades
+    volumes:
+      - '/home/$USER/:/home/$USER'  # home directory
+
   gerrit:
     container_name: jhu_gerrit
     #image: gerritcodereview/gerrit
@@ -68,7 +77,7 @@ services:
       #- /gerrit/index:/var/gerrit/index
       #- /gerrit/cache:/var/gerrit/cache
     environment:
-      - CANONICAL_WEB_URL=http://gerrit.askey.cn:8080 
+      - CANONICAL_WEB_URL=http://10.8.16.124:8080
     user: 0:0
    
     restart: always
@@ -77,19 +86,18 @@ services:
 
   ldap:
     container_name: jhu_ldap
-    image: osixia/openldap
+    image: osixia/openldap:1.4.0
     ports:
       - "389:389"
       - "636:636"
     environment:
       - LDAP_ADMIN_PASSWORD=secret
+      - LDAP_ORGANISATION=askey
+      - LDAP_DOMAIN=askey.cn
+
     volumes:
-      #- /home/$USER/sc_work/docker_ws/gerrit/passwd:/etc/passwd #passwd
-      #- /home/$USER/sc_work/docker_ws/gerrit/group:/etc/group  #group
       - /home/$USER/sc_work/docker_ws/ldap/var:/var/lib/ldap
       - /home/$USER/sc_work/docker_ws/ldap/etc:/etc/ldap/slapd.d
-      #- /gerrit/ldap/var:/var/lib/ldap
-      #- /gerrit/ldap/etc:/etc/ldap/slapd.d
     user: 0:0
 
   ldap-admin:
@@ -126,3 +134,11 @@ services:
     volumes:
       - /home/$USER/sc_work/docker_ws/gerrit/git:/var/www/cgit
 
+  smtp:
+    container_name: jhu_smtp
+    image: namshi/smtp:latest
+    ports:
+      - "587:25"
+    environment:
+      - RELAY_NETWORKS=:10.8.0.0/16
+    restart: always

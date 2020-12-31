@@ -184,6 +184,11 @@ alias mountts='mkdir /home/$USER/testsrv &>/dev/null ; sudo mount -t nfs 10.8.18
 alias gnome-terminal="gnome-terminal --disable-factory"
 alias eclipse='eclipse &>/dev/null &'
 
+#gerrit
+alias gcp='ssh gerrit.askey.cn -p 29418 gerrit create-project '
+alias gsp='ssh gerrit.askey.cn -p 29418 gerrit set-project-parent -p mirror-project-permission-base'
+
+
 #alias fn='find . -iname '
 alias gn='grep -nr'
 alias gi='grep -inr'
@@ -217,3 +222,5 @@ export RTE_TARGET=x86_64-native-linuxapp-gcc
 #error: gpg failed to sign the data
 #error: unable to sign the taG
 export GPG_TTY=$(tty)
+
+
