@@ -142,3 +142,10 @@ services:
     environment:
       - RELAY_NETWORKS=:10.8.0.0/16
     restart: always
+  
+  reposync:
+    container_name: jhu_reposync
+    image: askey/reposync
+    volumes:
+      - /home/$USER/docker_ws/reposync:/opt/reposync
+
