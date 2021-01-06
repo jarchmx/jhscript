@@ -131,3 +131,13 @@ services:
     environment:
       - RELAY_NETWORKS=:10.8.0.0/16
     restart: always
+
+  reposync:
+    container_name: jhu_reposync
+    image: askey/reposync:1.0
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    volumes:
+      - /home/$USER/docker_ws/reposync:/opt/reposync
+      - /home/$USER/docker_ws/gerrit/git:/opt/git
+      - /home/$USER/jhscript/script/scm:/home/$USER/jhscript/script/scm
