@@ -1,0 +1,12 @@
+[Unit]
+Description=Gerrit Docker compose service
+After=network-online.target containerd.service docker.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=docker-compose -f /home/gerrit/jhscript/cfg/docker/docker-compose-gerritsrv.yml up -d --no-recreate
+RemainAfterExit=true
+
+[Install]
+WantedBy=multi-user.target

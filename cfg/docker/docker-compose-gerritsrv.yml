@@ -1,50 +1,9 @@
 version: "3"
 
-# More info at https://github.com/oracle/opengrok/docker/
 services:
-  #opengrok:
-  #  container_name: jhu_opengrok
-  #  image: opengrok/docker:latest
-  #  ports:
-  #    - "8081:8080/tcp"
-  #  environment:
-  #    REINDEX: '600000000'
-    # Volumes store your data between container upgrades
-  #  volumes:
-      #- '/home/$USER/:/home/$USER'  # source code
-  #    - '/home/$USER/sc_work/docker_ws/opengrok/src:/opengrok/src/'  # source code
-  #    - '/home/$USER/sc_work/docker_ws/opengrok/etc/:/opengrok/etc/'  # folder contains configuration.xml
-  #    - '/home/$USER/sc_work/docker_ws/opengrok/data/:/opengrok/data/'  # index and other things for source code
-  
-  #dns:
-  #  container_name: jhu_dns
-  #  image: jpillora/dnsmasq:latest
-  #  ports:
-  #    - "5380:8080/tcp"
-  #    - "53:53/udp"
-  #  environment:
-  #    HTTP_USER: 'foo'
-  #    HTTP_PASS: 'bar'
-    # Volumes store your data between container upgrades
-  #  volumes:
-  #    - '/home/$USER/jhscript/cfg/docker/dnsmasq.conf:/etc/dnsmasq.conf'  #dnsmasq.conf
-
-  #lsdk_1909:
-  #  container_name: jhu_lsdk
-  #  image: lsdk_build:v1909
-  #  stdin_open: true # docker run -i
-  #  tty: true        # docker run -t
-    # Volumes store your data between container upgrades
-  #  volumes:
-  #    - '/home/$USER/:/home/$USER'  # home directory
-      
   gerrit:
     container_name: jhu_gerrit
-    #image: gerritcodereview/gerrit
-    #image: gerritcodereview/gerrit:3.2.5
-    #image: gerritcodereview/gerrit:3.1.10-ubuntu18
     image: gerritcodereview/gerrit:3.1.11-ubuntu18
-    #image: gerritcodereview/gerrit:3.3.0-ubuntu20
     ports:
       - "29418:29418"
       - "8080:8080"
@@ -56,24 +15,11 @@ services:
       - /home/$USER/docker_ws/gerrit/db:/var/gerrit/db
       - /home/$USER/docker_ws/gerrit/index:/var/gerrit/index
       - /home/$USER/docker_ws/gerrit/cache:/var/gerrit/cache
-      #- /home/gerrit/etc:/var/gerrit/etc
-      #- /home/gerrit/git:/var/gerrit/git
-      #- /home/gerrit/db:/var/gerrit/db
-      #- /home/gerrit/index:/var/gerrit/index
-      #- /home/gerrit/cache:/var/gerrit/cache
-      #- /home/$USER/sc_work/docker_ws/gerrit/passwd:/etc/passwd #passwd
-      #- /home/$USER/sc_work/docker_ws/gerrit/group:/etc/group  #group
-      #- /gerrit/etc:/var/gerrit/etc
-      #- /gerrit/git:/var/gerrit/git
-      #- /gerrit/db:/var/gerrit/db
-      #- /gerrit/index:/var/gerrit/index
-      #- /gerrit/cache:/var/gerrit/cache
     environment:
       - CANONICAL_WEB_URL=http://gerrit.askey.cn:8080 
     user: 0:0
    
     restart: always
-    #command: init
     
 
   ldap:
@@ -97,24 +43,6 @@ services:
     environment:
       - PHPLDAPADMIN_LDAP_HOSTS=ldap
 
-  #gitlab:
-  #  container_name: jhu_gitlab
-  #  image: 'gitlab/gitlab-ce:13.6.2-ce.0'
-  #  restart: always
-  #  hostname: 'gitlab.askey.com'
-  #  environment:
-  #    GITLAB_OMNIBUS_CONFIG: |
-  #      external_url 'http://10.8.16.124'
-  #      # gitlab_rails['gitlab_shell_ssh_port'] = 8922
-  #  ports:
-  #    - '8943:443'
-  #    - '8980:80'
-  #    - '8922:22'
-  #  volumes:
-  #    - '/home/$USER/sc_work/docker_ws/gitlab/config:/etc/gitlab'
-  #    - '/home/$USER/sc_work/docker_ws/gitlab/logs:/var/log/gitlab'
-  #    - '/home/$USER/sc_work/docker_ws/gitlab/data:/var/opt/gitlab'
-  
   cgit:
     container_name: jhu_cgit
     image: clearlinux/cgit:latest
@@ -134,10 +62,9 @@ services:
 
   reposync:
     container_name: jhu_reposync
-    image: askey/reposync:1.0
+    image: askey/reposync:v1.2
     stdin_open: true # docker run -i
     tty: true        # docker run -t
     volumes:
-      - /home/$USER/docker_ws/reposync:/opt/reposync
-      - /home/$USER/docker_ws/gerrit/git:/opt/git
-      - /home/$USER/jhscript/script/scm:/home/$USER/jhscript/script/scm
+      - /home/$USER/docker_ws/reposync.gerrit:/home/$USER/reposync.gerrit
+      - /home/$USER/jhscript/script/scm/reposync.sh:/home/$USER/reposync.sh
