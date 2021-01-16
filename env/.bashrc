@@ -182,10 +182,9 @@ alias fr2='fastboot oem swi-set-ssid 222 && fastboot reboot'
 alias fe='fastboot erase'
 alias frfs='fastboot flash system'
 alias fu='fastboot oem keep-alive && fastboot oem flash-unlock aepa1du5vae1fahb9enohchie+Neer5t'
-alias mountsc='mkdir /home/$USER/sc_work &>/dev/null ; sudo mount -t nfs fsm_srv:/home/jarch_hu/sc_work /home/$USER/sc_work'
-#alias mountms='mkdir /home/$USER/module_srv &>/dev/null ; sudo mount -t nfs module_srv:/home/jarch_hu/module_srv /home/$USER/module_srv'
-alias mountwk='mkdir /home/$USER/work &>/dev/null ; sudo mount -t nfs module_srv:/home/jarch_hu/work /home/$USER/work'
-alias mountwk2='mkdir /home/$USER//module_srv2 &>/dev/null ; sudo mount -t nfs 10.8.16.121:/home/jarch_hu//module_srv2 /home/$USER//module_srv2'
+alias mountsc='mkdir /home/$USER/sc_work &>/dev/null ; sudo mount -t nfs 10.8.16.124:/home/jarch_hu/sc_work /home/$USER/sc_work'
+alias mountms='mkdir /home/$USER/module_srv &>/dev/null ; sudo mount -t nfs 10.8.16.120:/home/jarch_hu/module_srv /home/$USER/module_srv'
+alias mountms2='mkdir /home/$USER/module_srv2 &>/dev/null ; sudo mount -t nfs 10.8.16.121:/home/jarch_hu/module_srv2 /home/$USER/module_srv2'
 alias mountts='mkdir /home/$USER/testsrv &>/dev/null ; sudo mount -t nfs 10.8.18.182:/home/jarch_hu/testsrv /home/$USER/testsrv'
 alias gnome-terminal="gnome-terminal --disable-factory"
 alias eclipse='eclipse &>/dev/null &'
@@ -228,5 +227,3 @@ export RTE_TARGET=x86_64-native-linuxapp-gcc
 #error: gpg failed to sign the data
 #error: unable to sign the taG
 export GPG_TTY=$(tty)
-
-
