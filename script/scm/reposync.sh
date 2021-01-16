@@ -38,7 +38,7 @@ do
     t)
         export tgtroot=$OPTARG
         echo "target root: $tgtroot"
-        [ ! -d $tgtroot ] && echo "$tgtroot not exist" && exit 1
+        #[ ! -d $tgtroot ] && echo "$tgtroot not exist" && exit 1
         ;;
     h)
         usage
@@ -64,7 +64,7 @@ BASESRC=`basename $srcdir`
 
 cd $REALSRC
 
-LOGPATH=$(dirname $0)/logs/
+LOGPATH=$(dirname $REALSRC)/logs/
 
 [ ! -d $LOGPATH ] && mkdir -p $LOGPATH
 LOGFILE="$LOGPATH"/"$BASESRC"_$(date +%Y%m%d%H%M%S).log
@@ -82,7 +82,7 @@ sync_all()
             repo sync
             #repo forall -c 'git push --mirror -v $tgt'
             #repo forall -c 'tgt=$tgtroot/$prefix/$REPO_PROJECT.git ; echo push $REPO_PROJECT.git to $tgt; git push --all -v $tgt || exit 1'
-            repo forall -c 'tgt=$tgtroot/$prefix/$REPO_PROJECT.git ; echo push --all $prefix/$REPO_PROJECT.git to $tgt; git push --all $tgt || exit 1'
+            repo forall -c 'tgt=$tgtroot/$prefix/$REPO_PROJECT.git ; echo git push --all $prefix/$REPO_PROJECT.git to $tgt; git push --all -v $tgt'
             cd -
         else
             prefix=$gits
@@ -91,14 +91,15 @@ sync_all()
                 echo $update $git
                 tgt=$tgtroot/$git
                 echo tgt:$tgt
-                [ ! -d $tgt ] && error_handler "$tgt not exist";
+                #[ ! -d $tgt ] && error_handler "$tgt not exist";
                 cd $git
                 #git remote update
                 git fetch origin --tags +refs/heads/*:refs/remotes/origin/*
                 echo push $git to $tgt
                 #echo git push --all -v $tgt
                 echo git push --all $tgt 
-                git push --all -v $tgt || error_handler "Update $tgt fail"
+                #git push --all -v $tgt || error_handler "Update $tgt fail"
+                git push --all -v $tgt  || echo "run git push --all -v $tgt fail"
                 cd -
             done
         fi
