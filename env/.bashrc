@@ -137,6 +137,11 @@ mc()
     sudo touch $LOGFILE
     sudo ln -sf $LOGFILE "$LOGPATH".log
 
+    if [ ! -c /dev/$DEV ];then
+        sudo socat pty,link=/dev/$DEV tcp:localhost:2000 &
+        sleep 1
+    fi
+
     if [ -n $BAUD ];then
         echo minicom -D /dev/$DEV -b $BAUD -w -C $LOGFILE default
         sudo minicom -D /dev/$DEV -b $BAUD -w -C $LOGFILE default
