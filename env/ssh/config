@@ -1,0 +1,30 @@
+Host askgerrit
+    Hostname gerrit.askey.cn
+    Port 29418
+    User jarch_hu
+
+Host gerrit
+    Hostname gerrit.askey.cn
+    Port 22
+    User gerrit
+
+Host testsrv
+    Hostname 10.8.16.158
+    Port 22
+    User jarch_hu
+
+Host fsmsrv
+    Hostname 10.8.16.124
+    Port 22
+    User jarch_hu
+
+Host ms1
+    Hostname 10.8.16.120
+    Port 22
+    User jarch_hu
+
+Host ms2
+    Hostname 10.8.16.121
+    Port 22
+    User jarch_hu
+
