@@ -3,17 +3,22 @@ Host askgerrit
     Port 29418
     User jarch_hu
 
-Host gerrit
+Host mg
     Hostname gerrit.askey.cn
     Port 22
     User gerrit
 
-Host testsrv
+Host sg
+    Hostname slave.gerrit.askey.cn
+    Port 22
+    User gerrit
+
+Host ts
     Hostname 10.8.16.158
     Port 22
     User jarch_hu
 
-Host fsmsrv
+Host sc
     Hostname 10.8.16.124
     Port 22
     User jarch_hu
