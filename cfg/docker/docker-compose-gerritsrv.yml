@@ -66,5 +66,21 @@ services:
     stdin_open: true # docker run -i
     tty: true        # docker run -t
     volumes:
+      - /home/$USER/docker_ws/opengrok:/home/$USER/opengrok
       - /home/$USER/docker_ws/reposync.gerrit:/home/$USER/reposync.gerrit
       - /home/$USER/jhscript/script/scm/reposync.sh:/home/$USER/reposync.sh
+
+  opengrok:
+    container_name: jhu_opengrok
+    image: opengrok/docker:1.5.11
+    ports:
+      - "8081:8080/tcp"
+    environment:
+      REINDEX: '720'
+      NOMIRROR: '1'
+    # Volumes store your data between container upgrades
+    volumes:
+      #- '/home/$USER/:/home/$USER'  # source code
+      - '/home/$USER/docker_ws/opengrok/src:/opengrok/src/'  # source code
+      - '/home/$USER/docker_ws/opengrok/etc/:/opengrok/etc/'  # folder contains configuration.xml
+      - '/home/$USER/docker_ws/opengrok/data/:/opengrok/data/'  # index and other things for source code
