@@ -191,7 +191,8 @@ alias eclipse='eclipse &>/dev/null &'
 
 #gerrit
 alias gcp='ssh gerrit.askey.cn -p 29418 gerrit create-project '
-alias gsp='ssh gerrit.askey.cn -p 29418 gerrit set-project-parent -p mirror-project-permission-base'
+alias gsp='ssh gerrit.askey.cn -p 29418 gerrit set-project-parent -p '
+alias glp='ssh gerrit.askey.cn -p 29418 gerrit ls-projects '
 
 
 #alias fn='find . -iname '

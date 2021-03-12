@@ -28,3 +28,10 @@ Host ms2
     Port 22
     User jarch_hu
 
+Host *.codeaurora.org
+  IdentityFile ~/.ssh/id_rsa
+  User git
+  Port 9222
+  ControlPath ~/.ssh/%r@%h:%p
+  ControlMaster auto
+  ControlPersist 30m
