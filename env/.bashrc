@@ -228,3 +228,5 @@ export RTE_TARGET=x86_64-native-linuxapp-gcc
 #error: gpg failed to sign the data
 #error: unable to sign the taG
 export GPG_TTY=$(tty)
+
+export PATH=$PATH:/home/gerrit/work/scm-utils/script/
