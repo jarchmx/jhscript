@@ -52,7 +52,6 @@
     insteadOf = git://codeaurora.org
     insteadOf = https://source.codeaurora.org
 
-
 [url "ssh://gerrit.askey.cn:29418"]
     pushInsteadOf = git://gerrit.askey.cn
 
@@ -62,3 +61,6 @@
 
 [http]
     followRedirects=true
+	postBuffer = 524288000
+	lowSpeedLimit = 0
+	lowSpeedTime = 999999
