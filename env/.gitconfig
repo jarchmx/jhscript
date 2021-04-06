@@ -37,8 +37,8 @@
 [gpg]
 	program = gpg2
 
-[protocol]
-  version = 2
+#[protocol]
+#  version = 2
 
 [url "https://private.source.codeaurora.cn"]
     insteadOf = ssh://git.codeaurora.org:9222
@@ -54,3 +54,9 @@
 [url "https://source.codeaurora.cn"]
     insteadOf = git://codeaurora.org
     insteadOf = https://source.codeaurora.org
+
+[url "git://gerrit.askey.cn"]
+    insteadOf = ssh://gerrit.askey.cn:29418
+
+[url "ssh://gerrit.askey.cn:29418"]
+    pushInsteadOf = git://gerrit.askey.cn
