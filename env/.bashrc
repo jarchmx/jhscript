@@ -165,6 +165,12 @@ fn()
     find . -iname "$*"
 }
 
+proxy()
+{
+    #proxy 30389 to slave.gerrit.askey.cn
+    ssh -NfL 0.0.0.0:30389:slave.gerrit.askey.cn:30389 jarch_hu@localhost
+}
+
 alias ts='tmux switch -t'
 #alias ta='tmux a -t'
 alias tl='tmux ls'

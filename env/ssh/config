@@ -33,6 +33,11 @@ Host ms2
     Port 22
     User jarch_hu
 
+Host bld1
+    Hostname 10.8.16.187
+    Port 22
+    User jarch_hu
+
 Host *.codeaurora.org
   IdentityFile ~/.ssh/id_rsa
   User git
