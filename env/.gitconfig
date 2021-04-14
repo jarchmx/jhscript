@@ -2,8 +2,8 @@
     #template = /home/jarch_hu/jhscript/env/.commit_message_format
 
 [user]
-    email = jarch_hu@askey.com
-    name = Jarch
+    email = jarch1019@163.com
+    name = gerrit
 [core]
     editor = vim
     #editor = emacs
@@ -31,9 +31,6 @@
     default = simple
 [color]
     ui = auto
-[credential]
-    username = jarch_hu@askey.com
-    helper = store
 [gpg]
 	program = gpg2
 
@@ -60,3 +57,7 @@
 
 [url "ssh://gerrit.askey.cn:29418"]
     pushInsteadOf = git://gerrit.askey.cn
+
+[credential "https://chipmaster2.qti.qualcomm.com"]
+    user = jarch_hu@askey.com
+    helper = store
