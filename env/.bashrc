@@ -114,7 +114,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export PATH=/opt/usr/bin/eclipse:/opt/usr/bin/:$PATH:/sbin/:/home/$USER/jhscript/:/home/$USER/jhscript/bin:/opt/eclipse
+export PATH=/opt/usr/bin/eclipse:/opt/usr/bin/:$PATH:/sbin/:/home/$USER/jhscript/:/home/$USER/jhscript/bin:/opt/eclipse:/home/jarch_hu/jhscript/script/security
 
 #for adb/fastboot.exe
 export PATH=$PATH:/mnt/e/sw/android/adb_new/
@@ -192,7 +192,7 @@ alias fu='fastboot oem keep-alive && fastboot oem flash-unlock aepa1du5vae1fahb9
 alias mountsc='mkdir /home/$USER/sc_work &>/dev/null ; sudo mount -t nfs 10.8.16.124:/home/jarch_hu/sc_work /home/$USER/sc_work'
 alias mountms='mkdir /home/$USER/module_srv &>/dev/null ; sudo mount -t nfs 10.8.16.120:/home/jarch_hu/module_srv /home/$USER/module_srv'
 alias mountms2='mkdir /home/$USER/module_srv2 &>/dev/null ; sudo mount -t nfs 10.8.16.121:/home/jarch_hu/module_srv2 /home/$USER/module_srv2'
-alias mountts='mkdir /home/$USER/testsrv &>/dev/null ; sudo mount -t nfs 10.8.18.182:/home/jarch_hu/testsrv /home/$USER/testsrv'
+alias mountts='mkdir /home/$USER/testsrv &>/dev/null ; sudo mount -t nfs 10.8.16.158:/home/jarch_hu/testsrv /home/$USER/testsrv'
 alias gnome-terminal="gnome-terminal --disable-factory"
 alias eclipse='eclipse &>/dev/null &'
 
@@ -217,12 +217,6 @@ export ACROBAT_PATH=/opt/Adobe/Reader9
 
 #alias ssh='ssh -X'
 
-sdx55ld()
-{
-    export PYTHONBIN=/pkg/qct/software/python/2.7/bin
-    export PYTHON_PATH=/pkg/qct/software/python/2.7/bin
-    export PATH=$PYTHON_PATH:$PATH 
-}
 ARCH=`uname -m`
 [[ $ARCH == "x86_64" && -f ~/.fzf.bash ]] && source ~/.fzf.bash
 
@@ -237,3 +231,8 @@ export RTE_TARGET=x86_64-native-linuxapp-gcc
 export GPG_TTY=$(tty)
 
 export PATH=$PATH:/home/gerrit/work/scm-utils/script/
+
+kill_bitbake()
+{
+    for n in `ps aux | grep bitbake |grep -v grep | awk '{print $2}'` ; do kill -9 $n ; done
+}

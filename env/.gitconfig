@@ -2,7 +2,7 @@
     #template = /home/jarch_hu/jhscript/env/.commit_message_format
 
 [user]
-    email = jarch1019@163.com
+    email = jarch_hu@askey.com
     name = gerrit
 [core]
     editor = vim
@@ -52,8 +52,6 @@
     insteadOf = git://codeaurora.org
     insteadOf = https://source.codeaurora.org
 
-[url "git://gerrit.askey.cn"]
-    insteadOf = ssh://gerrit.askey.cn:29418
 
 [url "ssh://gerrit.askey.cn:29418"]
     pushInsteadOf = git://gerrit.askey.cn
