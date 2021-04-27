@@ -3,21 +3,26 @@ version: "3"
 services:
   gerrit:
     container_name: jhu_gerrit
+    image: gerritcodereview/gerrit:3.3.3
     #image: gerritcodereview/gerrit:3.3.2
     #image: gerritcodereview/gerrit:3.2.7
-    image: gerritcodereview/gerrit:3.1.11-ubuntu18
+    #image: gerritcodereview/gerrit:3.1.11-ubuntu18
     ports:
       - "29418:29418"
       - "8080:8080"
     volumes:
-      - /home/$USER/docker_ws/gerrit/etc:/var/gerrit/etc
-      - /home/$USER/docker_ws/gerrit/git:/var/gerrit/git
-      - /home/$USER/docker_ws/gerrit/db:/var/gerrit/db
-      - /home/$USER/docker_ws/gerrit/index:/var/gerrit/index
-      - /home/$USER/docker_ws/gerrit/cache:/var/gerrit/cache
+      - /etc/passwd:/etc/passwd
+      - /etc/shadow:/etc/shadow
+      - /etc/group:/etc/group
+      - /home:/home
+      - /home/docker_ws/gerrit/etc:/var/gerrit/etc
+      - /home/docker_ws/gerrit/git:/var/gerrit/git
+      - /home/docker_ws/gerrit/db:/var/gerrit/db
+      - /home/docker_ws/gerrit/index:/var/gerrit/index
+      - /home/docker_ws/gerrit/cache:/var/gerrit/cac
     environment:
       - CANONICAL_WEB_URL=http://10.8.16.158:8080 
-    user: 0:0
+    user: 1000:1000
    
     #restart: always
     #command: init
@@ -28,7 +33,7 @@ services:
     ports:
       - "8082:80"
     volumes:
-      - /home/$USER/docker_ws/gerrit/git:/var/www/cgit
+      - /home/docker_ws/gerrit/git:/var/www/cgit
 
   db:
     image: postgres
@@ -39,4 +44,4 @@ services:
     environment:
       POSTGRES_PASSWORD: secret
     volumes:
-      - /home/$USER/docker_ws/postgresql/data:/var/lib/postgresql/data
+      - /home/docker_ws/postgresql/data:/var/lib/postgresql/data
