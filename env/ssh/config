@@ -1,7 +1,6 @@
 Host mgerrit
     Hostname gerrit.askey.cn
     Port 29418
-    User jarch_hu
 
 Host mg
     Hostname gerrit.askey.cn

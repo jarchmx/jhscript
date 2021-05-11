@@ -59,3 +59,6 @@
 [credential "https://chipmaster2.qti.qualcomm.com"]
     user = jarch_hu@askey.com
     helper = store
+
+[http]
+    followRedirects=true
