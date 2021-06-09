@@ -14,10 +14,10 @@ Host mg
     Port 22
     User gerrit
 
-Host sg
-    Hostname slave.gerrit.askey.cn
+Host slave.gerrit.askey.cn
     Port 22
     User jarch_hu
+    IdentityFile ~/.ssh/id_rsa
 
 Host ts
     Hostname 10.8.16.158
@@ -51,3 +51,8 @@ Host *.codeaurora.org
   ControlPath ~/.ssh/%r@%h:%p
   ControlMaster auto
   ControlPersist 30m
+
+Host bitbucket.askey.com.tw
+  User git
+  IdentityFile ~/.ssh/id_rsa_gerrit
+  Port 7999
