@@ -11,6 +11,7 @@
 
 [alias]
     st = status
+    cp = cherry-pick
     co = checkout
     br = branch
     mg = merge

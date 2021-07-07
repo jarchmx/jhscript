@@ -15,7 +15,7 @@ $0 <options ...>
     -p <product>
     -v <yocto version>
     -s <os type>
-  Available products: ar758x/ar759x/em91
+  Available products: ar758x/ar759x/em91/c6xx/olympic
   Available yocto version: 1.7/2.2/2.7
   Available os type: win/linux
   Notes:
@@ -78,6 +78,11 @@ elif [ "$PRODUCT" == "c6xx" ] && [ "$VERSION" == "2.7" ];then
     gdb=/opt/askey/c6xx/sysroots/x86_64-oesdk-linux/usr/bin/arm-oe-linux-gnueabi/arm-oe-linux-gnueabi-gdb
     nm=/opt/askey/c6xx/sysroots/x86_64-oesdk-linux/usr/bin/arm-oe-linux-gnueabi/arm-oe-linux-gnueabi-nm
     objdump=/opt/askey/c6xx/sysroots/x86_64-oesdk-linux/usr/bin/arm-oe-linux-gnueabi/arm-oe-linux-gnueabi-objdump
+    #ARGS="--force-hardware sdxprairie "
+elif [ "$PRODUCT" == "olympic" ];then
+    gdb=/opt/askey/olympic/sysroots/x86_64-qtisdk-linux/usr/bin/arm-oe-linux/arm-oe-linux-gdb
+    nm=/opt/askey/olympic/sysroots/x86_64-qtisdk-linux/usr/bin/arm-oe-linux/arm-oe-linux-nm
+    objdump=/opt/askey/olympic/sysroots/x86_64-qtisdk-linux/usr/bin/arm-oe-linux/arm-oe-linux-objdump
     #ARGS="--force-hardware sdxprairie "
 else
     echo "Wrong product or yocto version"

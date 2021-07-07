@@ -114,7 +114,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export PATH=/opt/usr/bin/eclipse:/opt/usr/bin/:$PATH:/sbin/:/home/$USER/jhscript/:/home/$USER/jhscript/bin:/opt/eclipse:/home/jarch_hu/jhscript/script/security
+export PATH=/opt/usr/bin/eclipse:/opt/usr/bin/:$PATH:/sbin/:/home/$USER/jhscript/:/home/$USER/jhscript/bin:/opt/eclipse:/home/jarch_hu/jhscript/script/security:/home/jarch_hu/jhscript/script/module
 
 #for adb/fastboot.exe
 export PATH=$PATH:/mnt/e/sw/android/adb_new/
@@ -191,6 +191,7 @@ alias mountsc='mkdir /home/$USER/sc_work &>/dev/null ; sudo mount -t nfs 10.8.16
 alias mountms='mkdir /home/$USER/module_srv &>/dev/null ; sudo mount -t nfs 10.8.16.120:/home/jarch_hu/module_srv /home/$USER/module_srv'
 alias mountms2='mkdir /home/$USER/module_srv2 &>/dev/null ; sudo mount -t nfs 10.8.16.121:/home/jarch_hu/module_srv2 /home/$USER/module_srv2'
 alias mountts='mkdir /home/$USER/testsrv &>/dev/null ; sudo mount -t nfs 10.8.16.158:/home/jarch_hu/testsrv /home/$USER/testsrv'
+alias mountsg='mkdir /home/$USER/sg &>/dev/null ; sudo mount -t nfs 10.8.17.89:/home/$USER/sg /home/$USER/sg'
 alias gnome-terminal="gnome-terminal --disable-factory"
 alias eclipse='eclipse &>/dev/null &'
 
