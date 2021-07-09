@@ -2,13 +2,6 @@
 
 usage()
 {
-    echo "Usage:"
-    echo "      $0 signed_file"
-    exit 1
-}
-
-usage()
-{
     cat << EOF
 Usage:
 $0 <options ...>
@@ -16,6 +9,7 @@ $0 <options ...>
   Global:
     -f <signed file>
     -s <sha hash type> sha256/sha384
+    -b is binary.
 EOF
     exit 1
 }
@@ -64,7 +58,9 @@ parse_3level_cert()
     echo "root hash of sha384:$rhash_sha384"
 }
 
-while getopts "f:s:" arg
+IS_BINARY=0
+
+while getopts "f:s:b" arg
 do
     case $arg in
     f)
@@ -73,6 +69,9 @@ do
         ;;
     s)
         TARGET_SHA_TYPE=$OPTARG
+        ;;
+    b)
+        IS_BINARY=1
         ;;
     ?)
         echo "$0: invalid option -$OPTARG" 1>&2
@@ -104,9 +103,13 @@ rm -rf $outdir
 mkdir -p $outdir
 cd $outdir
 
-pil-splitter.py $signedfile_fullpath $signedfile_base
+if [ $IS_BINARY -ne 1 ];then
+    pil-splitter.py $signedfile_fullpath $signedfile_base
+    sign_seg="$signedfile_base".b01
+else
+    sign_seg=$signedfile_fullpath
+fi
 
-sign_seg="$signedfile_base".b01
 b01size=$(stat -c %s $sign_seg)
 cc_skip=`expr $b01size - 6144`
 dd if=$sign_seg of=cc.bin bs=1 skip=$cc_skip
