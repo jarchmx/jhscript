@@ -7,9 +7,18 @@ usage()
     exit 1
 }
 
-[ ! -f $1 ] && echo "$1 not exist" && usage
+usage()
+{
+    cat << EOF
+Usage:
+$0 <options ...>
 
-signed_file=$1
+  Global:
+    -f <signed file>
+    -s <sha hash type> sha256/sha384
+EOF
+    exit 1
+}
 
 #param#1 3 levels certs(6144 bytyes)
 parse_3level_cert()
@@ -55,6 +64,36 @@ parse_3level_cert()
     echo "root hash of sha384:$rhash_sha384"
 }
 
+while getopts "f:s:" arg
+do
+    case $arg in
+    f)
+        signed_file=$OPTARG
+        [ ! -f $signed_file ] && echo "$signed_file not exist." &&  usage
+        ;;
+    s)
+        TARGET_SHA_TYPE=$OPTARG
+        ;;
+    ?)
+        echo "$0: invalid option -$OPTARG" 1>&2
+        usage
+        ;;
+    esac
+done
+
+case $TARGET_SHA_TYPE in
+"sha256")
+    sig_size=256
+    ;;
+"sha384")
+    sig_size=104
+    ;;
+?)
+    echo "Wrong sha type:$TARGET_SHA_TYPE"
+    usage
+    ;;
+esac
+
 signedfile_fullpath=`realpath $signed_file`
 signedfile_dir=`dirname $signedfile_fullpath`
 signedfile_base=`basename $signedfile_fullpath | awk -F'.' '{print $1}'`
@@ -71,19 +110,30 @@ sign_seg="$signedfile_base".b01
 b01size=$(stat -c %s $sign_seg)
 cc_skip=`expr $b01size - 6144`
 dd if=$sign_seg of=cc.bin bs=1 skip=$cc_skip
-sig_skip=`expr $cc_skip - 104`
-dd if=$sign_seg of=sig.tmp bs=1 skip=$sig_skip count=104
-dd if=sig.tmp of=sig.size bs=1 skip=1 count=1
-#get the signature size.
-sig_size=`cat sig.size | od -An -t dC`
-sig_size=`expr $sig_size + 2`
+sig_skip=`expr $cc_skip - $sig_size`
+
+#sha384 actual sign size is 2nd byte + 2 of sig header.
+if [ $TARGET_SHA_TYPE == "sha384" ];then
+    dd if=$sign_seg of=sig.tmp bs=1 skip=$sig_skip count=$sig_size
+    dd if=sig.tmp of=sig.size bs=1 skip=1 count=1
+    #get the signature size.
+    set -x
+    sig_size=`cat sig.size | od -An -t dC`
+    sig_size=`expr $sig_size + 2`
+    rm -f sig.size sig.tmp
+    set +x
+fi
 
 dd if=$sign_seg of=sig bs=1 skip=$sig_skip count=$sig_size
-rm -f sig.size sig.tmp
-
-dd if=$sign_seg of=sign_data bs=1 count=$sig_skip
-openssl dgst -sha384 -binary sign_data >hash
 
 parse_3level_cert cc.bin
 
-openssl pkeyutl -verify -in hash -sigfile sig -pubin -inkey at.pub
+dd if=$sign_seg of=sign_data bs=1 count=$sig_skip
+
+if [ $TARGET_SHA_TYPE == "sha256" ];then
+    openssl dgst -sha256 -binary sign_data >hash
+    openssl pkeyutl -verify -in hash -sigfile sig -pubin -inkey at.pub -pkeyopt rsa_padding_mode:pss -pkeyopt digest:sha256
+elif [ $TARGET_SHA_TYPE == "sha384" ];then
+    openssl dgst -sha384 -binary sign_data >hash
+    openssl pkeyutl -verify -in hash -sigfile sig -pubin -inkey at.pub
+fi
