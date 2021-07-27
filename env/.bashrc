@@ -117,7 +117,7 @@ fi
 export PATH=/opt/usr/bin/eclipse:/opt/usr/bin/:$PATH:/sbin/:/home/$USER/jhscript/:/home/$USER/jhscript/bin:/opt/eclipse:/home/jarch_hu/jhscript/script/security:/home/jarch_hu/jhscript/script/module
 
 #for adb/fastboot.exe
-export PATH=$PATH:/mnt/e/sw/android/adb_new/
+export PATH=$PATH:/mnt/d/sw/android/adb_new/
 
 if ! tmux ls &>/dev/null ;then tmux-session restore &>/dev/null ; fi
 
