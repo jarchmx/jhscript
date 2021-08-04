@@ -114,7 +114,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export PATH=/opt/usr/bin/eclipse:/opt/usr/bin/:$PATH:/sbin/:/home/$USER/jhscript/:/home/$USER/jhscript/bin:/opt/eclipse:/home/jarch_hu/jhscript/script/security:/home/jarch_hu/jhscript/script/module
+export PATH=/opt/usr/bin/eclipse:/opt/usr/bin/:$PATH:/sbin/:/home/$USER/jhscript/:/home/$USER/jhscript/bin:/opt/eclipse:/home/$USER/jhscript/script/security:/home/$USER/jhscript/script/module
 
 #for adb/fastboot.exe
 export PATH=$PATH:/mnt/d/sw/android/adb_new/
@@ -192,6 +192,7 @@ alias mountms='mkdir /home/$USER/module_srv &>/dev/null ; sudo mount -t nfs 10.8
 alias mountms2='mkdir /home/$USER/module_srv2 &>/dev/null ; sudo mount -t nfs 10.8.16.121:/home/jarch_hu/module_srv2 /home/$USER/module_srv2'
 alias mountts='mkdir /home/$USER/testsrv &>/dev/null ; sudo mount -t nfs 10.8.16.158:/home/jarch_hu/testsrv /home/$USER/testsrv'
 alias mountsg='mkdir /home/$USER/sg &>/dev/null ; sudo mount -t nfs 10.8.17.89:/home/$USER/sg /home/$USER/sg'
+alias mountpre='mkdir /home/jarhu/work &>/dev/null ; sudo mount -t nfs 192.168.122.137:/home/jarhu/work /home/jarhu/work'
 alias gnome-terminal="gnome-terminal --disable-factory"
 alias eclipse='eclipse &>/dev/null &'
 
@@ -234,4 +235,15 @@ export PATH=$PATH:/home/gerrit/work/scm-utils/script/
 kill_bitbake()
 {
     for n in `ps aux | grep bitbake |grep -v grep | awk '{print $2}'` ; do kill -9 $n ; done
+}
+
+gitpush()
+{
+    dft_branch=`git br -a | grep m/master | awk -F'>' '{print $2}' | awk -F'/' '{print $2}' | tr -d '\n'`
+    remote=`git remote`
+    if [[ x$dft_branch == "x" || x$remote == "x" ]];then
+        echo "Can't detect default branch, please check it by \' git branch -a | grep master\'"
+        exit 1
+    fi
+    git push $remote HEAD:refs/for/$dft_branch
 }

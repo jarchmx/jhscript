@@ -65,3 +65,5 @@
 	postBuffer = 524288000
 	lowSpeedLimit = 0
 	lowSpeedTime = 999999
+[http "https://chipmaster2.qti.qualcomm.com"]
+	followRedirects = true
