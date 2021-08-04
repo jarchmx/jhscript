@@ -4,12 +4,13 @@ usage()
 {
     cat << EOF
 Usage:
+Parse cert chain from elf or mbn binary.
 $0 <options ...>
 
   Global:
     -f <signed file>
     -s <sha hash type> sha256/sha384
-    -b is binary.
+    -b is mbn binary.
 EOF
     exit 1
 }
@@ -59,6 +60,7 @@ parse_3level_cert()
 }
 
 IS_BINARY=0
+TARGET_SHA_TYPE="sha384"
 
 while getopts "f:s:b" arg
 do

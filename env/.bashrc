@@ -195,6 +195,7 @@ alias mountsg='mkdir /home/$USER/sg &>/dev/null ; sudo mount -t nfs 10.8.17.89:/
 alias mountpre='mkdir /home/jarhu/work &>/dev/null ; sudo mount -t nfs 192.168.122.137:/home/jarhu/work /home/jarhu/work'
 alias gnome-terminal="gnome-terminal --disable-factory"
 alias eclipse='eclipse &>/dev/null &'
+alias pwonlaptop='wakeonlan B0:5C:DA:DD:95:35'
 
 #gerrit
 alias gcp='ssh gerrit.askey.cn -p 29418 gerrit create-project '
