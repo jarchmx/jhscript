@@ -246,5 +246,5 @@ gitpush()
         echo "Can't detect default branch, please check it by \' git branch -a | grep master\'"
         exit 1
     fi
-    git push $remote HEAD:refs/for/$dft_branch
+    git push $remote HEAD:refs/for/$dft_branch$@
 }
