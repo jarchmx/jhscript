@@ -10,7 +10,7 @@ Host mg
 Host sg
     Hostname slave.gerrit.askey.cn
     Port 22
-    User gerrit
+    User jarch_hu
 
 Host ts
     Hostname 10.8.16.158
@@ -34,6 +34,11 @@ Host ms2
 
 Host bld1
     Hostname 10.8.16.187
+    Port 22
+    User jarch_hu
+
+Host bld2
+    Hostname 10.8.16.210
     Port 22
     User jarch_hu
 
