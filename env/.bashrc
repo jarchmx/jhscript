@@ -114,7 +114,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export PATH=/opt/usr/bin/eclipse:/opt/usr/bin/:$PATH:/sbin/:/home/$USER/jhscript/:/home/$USER/jhscript/bin:/opt/eclipse:/home/$USER/jhscript/script/security:/home/$USER/jhscript/script/module
+export PATH=/opt/usr/bin/eclipse:/opt/usr/bin/:$PATH:/sbin/:/home/$USER/jhscript/:/home/$USER/jhscript/bin:/opt/eclipse:/home/$USER/jhscript/script/security:/home/$USER/jhscript/script/module:/home/$USER/scm/scm-utils/script
 
 #for adb/fastboot.exe
 export PATH=$PATH:/mnt/d/sw/android/adb_new/
@@ -240,11 +240,11 @@ kill_bitbake()
 
 gitpush()
 {
-    dft_branch=`git br -a | grep m/master | awk -F'>' '{print $2}' | awk -F'/' '{print $2}' | tr -d '\n'`
+    dft_branch=`git branch -a | grep '\->' | awk -F'>' '{print $2}' | awk -F'/' '{print $2}' | tr -d '\n'`
     remote=`git remote`
     if [[ x$dft_branch == "x" || x$remote == "x" ]];then
         echo "Can't detect default branch, please check it by \' git branch -a | grep master\'"
-        exit 1
+        return 1
     fi
     git push $remote HEAD:refs/for/$dft_branch$@
 }
