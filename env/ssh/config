@@ -2,6 +2,13 @@ Host mgerrit
     Hostname gerrit.askey.cn
     Port 29418
 
+Host amgerrit
+    Hostname gerrit.askey.cn
+    Port 29418
+    User gerrit
+    IdentityFile ~/.ssh/id_rsa_mg_admin
+    PreferredAuthentications publickey
+
 Host mg
     Hostname gerrit.askey.cn
     Port 22
@@ -34,11 +41,6 @@ Host ms2
 
 Host bld1
     Hostname 10.8.16.187
-    Port 22
-    User jarch_hu
-
-Host bld2
-    Hostname 10.8.16.210
     Port 22
     User jarch_hu
 
