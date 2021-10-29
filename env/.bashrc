@@ -198,9 +198,9 @@ alias eclipse='eclipse &>/dev/null &'
 alias pwonlaptop='wakeonlan B0:5C:DA:DD:95:35'
 
 #gerrit
-alias gcp='ssh gerrit.askey.cn -p 29418 gerrit create-project '
-alias gsp='ssh gerrit.askey.cn -p 29418 gerrit set-project-parent -p '
-alias glp='ssh gerrit.askey.cn -p 29418 gerrit ls-projects '
+alias gcp='ssh mgerrit gerrit create-project '
+alias gsp='ssh mgerrit gerrit set-project-parent -p '
+alias glp='ssh mgerrit gerrit ls-projects '
 
 
 #alias fn='find . -iname '
