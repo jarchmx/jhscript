@@ -55,6 +55,7 @@
 
 [url "ssh://gerrit.askey.cn:29418"]
     pushInsteadOf = git://gerrit.askey.cn
+    pushInsteadOf = git://slave.gerrit.askey.cn
 
 [credential "https://chipmaster2.qti.qualcomm.com"]
     user = jarch_hu@askey.com
