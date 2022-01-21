@@ -231,8 +231,6 @@ export RTE_TARGET=x86_64-native-linuxapp-gcc
 #error: unable to sign the taG
 export GPG_TTY=$(tty)
 
-export PATH=$PATH:/home/gerrit/work/scm-utils/script/
-
 kill_bitbake()
 {
     for n in `ps aux | grep bitbake |grep -v grep | awk '{print $2}'` ; do kill -9 $n ; done

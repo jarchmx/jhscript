@@ -40,7 +40,7 @@ Host ms2
     User jarch_hu
 
 Host bld1
-    Hostname 10.8.16.187
+    Hostname 10.8.16.4
     Port 22
     User jarch_hu
 

@@ -1,13 +1,17 @@
+PGTEL-:
 
-Issue Description: 
-Committer: jarch_hu@askey.com
-Branch: master
-Model: WWLC611
-Customer: All
-Reported Model: WWLC611 
+Issue Description:
+
+Model:
+Customer: N/A
+Reported Model:
 Options: None
-Fix Type: Feature
+Fix Type: bug
 Fixed by: BSP_Team_SZ
-Root Cause: 
-Solution: 
-Test steps: 
+Root Cause:
+N/A
+
+Solution:
+
+Test steps:
+

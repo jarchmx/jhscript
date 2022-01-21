@@ -1,5 +1,5 @@
 [commit]
-    #template = /home/jarch_hu/jhscript/env/.commit_message_format
+    template = /home/jarch_hu/jhscript/env/.commit_message_format
 
 [user]
     email = jarch_hu@askey.com
@@ -38,20 +38,20 @@
 #[protocol]
 #  version = 2
 
-[url "https://private.source.codeaurora.cn"]
-    insteadOf = ssh://git.codeaurora.org:9222
-    insteadOf = ssh://git.codeaurora.org
-    insteadOf = ssh://privgit.codeaurora.org:9222
-    insteadOf = ssh://privgit.codeaurora.org
-    insteadOf = ssh://git@git.codeaurora.org:9222
-    insteadOf = ssh://git@git.codeaurora.org
-    insteadOf = ssh://git@privgit.codeaurora.org:9222
-    insteadOf = ssh://git@privgit.codeaurora.org
-    insteadOf = https://private.source.codeaurora.org
+#[url "https://private.source.codeaurora.cn"]
+#    insteadOf = ssh://git.codeaurora.org:9222
+#    insteadOf = ssh://git.codeaurora.org
+#    insteadOf = ssh://privgit.codeaurora.org:9222
+#    insteadOf = ssh://privgit.codeaurora.org
+#    insteadOf = ssh://git@git.codeaurora.org:9222
+#    insteadOf = ssh://git@git.codeaurora.org
+#    insteadOf = ssh://git@privgit.codeaurora.org:9222
+#    insteadOf = ssh://git@privgit.codeaurora.org
+#    insteadOf = https://private.source.codeaurora.org
 
-[url "https://source.codeaurora.cn"]
-    insteadOf = git://codeaurora.org
-    insteadOf = https://source.codeaurora.org
+#[url "https://source.codeaurora.cn"]
+#    insteadOf = git://codeaurora.org
+#    insteadOf = https://source.codeaurora.org
 
 [url "ssh://gerrit.askey.cn:29418"]
     pushInsteadOf = git://gerrit.askey.cn
