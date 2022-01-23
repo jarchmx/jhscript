@@ -114,7 +114,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export PATH=/opt/usr/bin/eclipse:/opt/usr/bin/:$PATH:/sbin/:/home/$USER/jhscript/:/home/$USER/jhscript/bin:/opt/eclipse:/home/$USER/jhscript/script/security:/home/$USER/jhscript/script/module:/home/$USER/scm/scm-utils/script
+export PATH=/opt/usr/bin/eclipse:/opt/usr/bin/:$PATH:/sbin/:$HOME/jhscript/:$HOME/jhscript/bin:/opt/eclipse:$HOME/jhscript/script/security:$HOME/jhscript/script/module:$HOME/scm/scm-utils/script:$HOME/jhscript/script/vpn
 
 #for adb/fastboot.exe
 export PATH=$PATH:/mnt/d/sw/android/adb_new/
@@ -187,11 +187,11 @@ alias fr2='fastboot oem swi-set-ssid 222 && fastboot reboot'
 alias fe='fastboot erase'
 alias frfs='fastboot flash system'
 alias fu='fastboot oem keep-alive && fastboot oem flash-unlock aepa1du5vae1fahb9enohchie+Neer5t'
-alias mountsc='mkdir /home/$USER/sc_work &>/dev/null ; sudo mount -t nfs 10.8.16.124:/home/jarch_hu/sc_work /home/$USER/sc_work'
-alias mountms='mkdir /home/$USER/module_srv &>/dev/null ; sudo mount -t nfs 10.8.16.120:/home/jarch_hu/module_srv /home/$USER/module_srv'
-alias mountms2='mkdir /home/$USER/module_srv2 &>/dev/null ; sudo mount -t nfs 10.8.16.121:/home/jarch_hu/module_srv2 /home/$USER/module_srv2'
-alias mountts='mkdir /home/$USER/testsrv &>/dev/null ; sudo mount -t nfs 10.8.16.158:/home/jarch_hu/testsrv /home/$USER/testsrv'
-alias mountsg='mkdir /home/$USER/sg &>/dev/null ; sudo mount -t nfs 10.8.17.89:/home/$USER/sg /home/$USER/sg'
+alias mountsc='mkdir $HOME/sc_work &>/dev/null ; sudo mount -t nfs 10.8.16.124:/home/jarch_hu/sc_work $HOME/sc_work'
+alias mountms='mkdir $HOME/module_srv &>/dev/null ; sudo mount -t nfs 10.8.16.120:/home/jarch_hu/module_srv $HOME/module_srv'
+alias mountms2='mkdir $HOME/module_srv2 &>/dev/null ; sudo mount -t nfs 10.8.16.121:/home/jarch_hu/module_srv2 $HOME/module_srv2'
+alias mountts='mkdir $HOME/testsrv &>/dev/null ; sudo mount -t nfs 10.8.16.158:/home/jarch_hu/testsrv $HOME/testsrv'
+alias mountsg='mkdir $HOME/sg &>/dev/null ; sudo mount -t nfs 10.8.17.89:$HOME/sg $HOME/sg'
 alias mountpre='mkdir /home/jarhu/work &>/dev/null ; sudo mount -t nfs 192.168.122.137:/home/jarhu/work /home/jarhu/work'
 alias gnome-terminal="gnome-terminal --disable-factory"
 alias eclipse='eclipse &>/dev/null &'
@@ -211,7 +211,7 @@ export T32SYS=/opt/t32
 export T32TMP=/tmp
 export T32ID=T32
 
-export PATH=$PATH:/opt/t32/bin/pc_linux64:/home/$USER/usr/bin/t32scipt/
+export PATH=$PATH:/opt/t32/bin/pc_linux64:$HOME/usr/bin/t32scipt/
 
 export ADOBE_PATH=/opt/Adobe/Reader9/
 export ACROBAT_PATH=/opt/Adobe/Reader9
