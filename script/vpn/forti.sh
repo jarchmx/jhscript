@@ -46,8 +46,7 @@ EOF
 echo "Please input your username"
 read VPN_USER
 echo "Please input passwd"
-read VPN_PASS
-echo user:$VPN_USER passwd:$VPN_PASS
+read -s VPN_PASS
 startConnect
 # note this will not continuously loop, it will only loop if the spawned vpn connection drops
 # i.e. will only hit this code when expect closes
