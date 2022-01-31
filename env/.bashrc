@@ -114,10 +114,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export PATH=/opt/usr/bin/eclipse:/opt/usr/bin/:$PATH:/sbin/:$HOME/jhscript/:$HOME/jhscript/bin:/opt/eclipse:$HOME/jhscript/script/security:$HOME/jhscript/script/module:$HOME/scm/scm-utils/script:$HOME/jhscript/script/vpn
-
-#for adb/fastboot.exe
-export PATH=$PATH:/mnt/d/sw/android/adb_new/
+export PATH=$PATH:/sbin/:/opt/eclipse:$HOME/bin:/mnt/d/sw/android/adb_new/
 
 if ! tmux ls &>/dev/null ;then tmux-session restore &>/dev/null ; fi
 
@@ -210,8 +207,6 @@ alias gi='grep -inr'
 export T32SYS=/opt/t32
 export T32TMP=/tmp
 export T32ID=T32
-
-export PATH=$PATH:/opt/t32/bin/pc_linux64:$HOME/usr/bin/t32scipt/
 
 export ADOBE_PATH=/opt/Adobe/Reader9/
 export ACROBAT_PATH=/opt/Adobe/Reader9
