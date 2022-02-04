@@ -12,9 +12,10 @@ Host amgerrit
 Host mg
     Hostname gerrit.askey.cn
     Port 22
-    User gerrit
+    User jarch_hu
 
-Host slave.gerrit.askey.cn
+Host sg
+    Hostname slave.gerrit.askey.cn
     Port 22
     User jarch_hu
     IdentityFile ~/.ssh/id_rsa
@@ -29,7 +30,7 @@ Host sc
     Port 22
     User jarch_hu
 
-Host ms1
+Host ms
     Hostname 10.8.16.120
     Port 22
     User jarch_hu
