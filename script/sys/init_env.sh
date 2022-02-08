@@ -50,6 +50,6 @@ link_env_cfg()
 }
 
 
-#link_sys_scripts
+link_sys_scripts
 
 link_env_cfg
