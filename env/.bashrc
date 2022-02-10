@@ -234,8 +234,8 @@ kill_bitbake()
 
 gitpush()
 {
-    dft_branch=`git branch -a | grep '\->' | awk -F'>' '{print $2}' | awk -F'/' '{print $2}' | tr -d '\n'`
     remote=`git remote`
+    dft_branch=`git branch -a | grep '\->' | awk -F'>' '{print $2}' | sed "s/$remote\///g" | tr -d ' ' | tr -d '\n'`
     if [[ x$dft_branch == "x" || x$remote == "x" ]];then
         echo "Can't detect default branch, please check it by \' git branch -a | grep master\'"
         return 1
