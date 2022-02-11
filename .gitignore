@@ -1,3 +1,5 @@
 defconfig
 *.cpio
 *.x509
+*.log
+*.tree
