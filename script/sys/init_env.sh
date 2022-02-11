@@ -6,6 +6,7 @@ CURRENT_PROG_DIR=$(dirname `realpath $0`)
 MAIN_DIR=$(realpath $CURRENT_PROG_DIR/../../)
 SCRIPT_DIR="$MAIN_DIR/script/"
 ENV_DIR="$MAIN_DIR/env/"
+CFG_DIR="$MAIN_DIR/cfg/"
 
 SYS_SCRIPTS="\
 	sys/tmux_init \
@@ -17,13 +18,17 @@ SYS_SCRIPTS="\
 "
 
 # src_file, target_dir
-ENV_CFG="\
+ENV_CONF="\
    .netrc,$HOME \
    .gitconfig,$HOME \
    .commit_message_format,$HOME \
    .vimrc,$HOME \
    .bashrc,$HOME \
    ssh/config,$HOME/.ssh \
+"
+
+CFG_CONF="\
+   eclipse_template,$HOME/workspace/ \
 "
 
 link_sys_scripts()
@@ -37,19 +42,36 @@ link_sys_scripts()
     done
 }
 
-link_env_cfg()
+link_env()
 {
-    for cfg in $ENV_CFG
+    for env in $ENV_CONF
     do
-        set `echo $cfg | awk -F',' '{printf("%s %s\n",$1,$2)}'`
+        set `echo $env | awk -F',' '{printf("%s %s\n",$1,$2)}'`
         src_file=$ENV_DIR/$1
         target_dir=$2
+        target_file=$target_dir/$(basename $1)
+        [ -L $target_file ] && rm -f $target_file
         [ ! -d $target_dir ] && mkdir -p $target_dir
-        ln -sf $src_file $target_dir/
+        ln -sf $src_file $target_file
     done
 }
 
+link_cfg()
+{
+    for cfg in $CFG_CONF
+    do
+        set `echo $cfg | awk -F',' '{printf("%s %s\n",$1,$2)}'`
+        src_file=$CFG_DIR/$1
+        target_dir=$2
+        target_file=$target_dir/$(basename $1)
+        [ -L $target_file ] && rm -f $target_file
+        [ ! -d $target_dir ] && mkdir -p $target_dir
+        ln -sf $src_file $target_file
+    done
+}
 
 link_sys_scripts
 
-link_env_cfg
+link_env
+
+link_cfg
