@@ -1,0 +1,16 @@
+[Unit]
+SourcePath=/usr/bin/tmux-session
+Description=tmux session Service
+#After=systemd-logind.service
+
+[Service]
+#Restart=no
+Type=oneshot
+RemainAfterExit=Yes
+ExecStart=/usr/bin/tmux-session restore
+ExecStop=/usr/bin/tmux-session save
+User=jarch_hu
+Group=sw2
+
+[Install]
+WantedBy=multi-user.target
