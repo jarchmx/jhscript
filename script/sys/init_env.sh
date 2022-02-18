@@ -21,7 +21,6 @@ SYS_SCRIPTS="\
 ENV_CONF="\
    .netrc,$HOME \
    .gitconfig,$HOME \
-   .commit_message_format,$HOME \
    .vimrc,$HOME \
    .bashrc,$HOME \
    ssh/config,$HOME/.ssh \
