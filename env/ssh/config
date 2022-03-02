@@ -45,6 +45,11 @@ Host bld1
     Port 22
     User jarch_hu
 
+Host jserv
+    Hostname 159.75.134.149
+    Port 22
+    User jarch_hu
+
 Host *.codeaurora.org
   IdentityFile ~/.ssh/id_rsa
   User git
