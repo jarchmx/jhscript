@@ -159,7 +159,7 @@ ta()
 
 fn()
 {
-    find . -iname "$*"
+    find -L . -iname "$*"
 }
 
 proxy()
@@ -187,6 +187,9 @@ alias fu='fastboot oem keep-alive && fastboot oem flash-unlock aepa1du5vae1fahb9
 alias mountsc='mkdir $HOME/sc_work &>/dev/null ; sudo mount -t nfs 10.8.16.124:/home/jarch_hu/sc_work $HOME/sc_work'
 alias mountms='mkdir $HOME/ms &>/dev/null ; sudo mount -t nfs 10.8.16.120:/home/jarch_hu/ms $HOME/ms'
 alias mountms2='mkdir $HOME/ms2 &>/dev/null ; sudo mount -t nfs 10.8.16.121:/home/users/jarch_hu/ms2 $HOME/ms2'
+alias mountms2_cifs='mkdir $HOME/ms2 &>/dev/null ; sudo mount -t cifs -o username=jarch_hu,password=123456,uid=$(id -u),gid=$(id -g) //10.8.16.121/jarch_hu/ms2 $HOME/ms2/'
+alias mountms68='mkdir -p $HOME/workspace/SDX6x &>/dev/null ; sudo mount -t nfs 10.8.16.68:/home/users/gerrit/workspace/SDX6x/ $HOME/workspace/SDX6x'
+alias mountms68_cifs='mkdir -p $HOME/workspace/SDX6x &>/dev/null ; sudo mount -t cifs -o username=gerrit,password=123456,uid=$(id -u),gid=$(id -g) //10.8.16.68/gerrit/workspace/SDX6x/ $HOME/workspace/SDX6x'
 alias mountms2_c='mkdir $HOME/ms2 &>/dev/null ; sudo sudo mount -t cifs -o username=jarch_hu //10.8.16.120/jarch_hu/ms2 $HOME/ms2'
 alias mountts='mkdir $HOME/testsrv &>/dev/null ; sudo mount -t nfs 10.8.16.158:/home/jarch_hu/testsrv $HOME/testsrv'
 alias mountsg='mkdir $HOME/sg &>/dev/null ; sudo mount -t nfs 10.8.17.89:/home/jarch_hu/sg $HOME/sg'
