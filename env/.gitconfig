@@ -63,7 +63,7 @@
 
 [http]
     followRedirects=true
-	postBuffer = 524288000
+	postBuffer = 10240000000
 	lowSpeedLimit = 0
 	lowSpeedTime = 999999
 
