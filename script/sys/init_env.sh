@@ -20,9 +20,9 @@ COMMANDS_LIST="\
     ln -sf $MAIN_DIR/script/module/ramdump-parser.sh $HOME/bin/, \
     sudo rm -f /usr/bin/tmux-session, \
     sudo cp $MAIN_DIR/script/sys/tmux-session /usr/bin/, \
-    sudo rm -f /lib/systemd/system/tmux@.service, \
-    sudo cp $MAIN_DIR/env/service/tmux@.service /lib/systemd/system/, \
-    sudo systemctl enable tmux@.service, \
+    mkdir -p $HOME/.config/systemd/user/, \
+    ln -sf $MAIN_DIR/env/service/tmux.service $HOME/.config/systemd/user/, \
+    systemctl --user enable tmux, \
 "
 
 run_commands()

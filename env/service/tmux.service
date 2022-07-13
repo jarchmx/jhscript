@@ -1,16 +1,13 @@
 [Unit]
 SourcePath=/usr/bin/tmux-session
-Description=tmux session Service for UID %i
-After=systemd-user-sessions.service
+Description=tmux session Service
 
 [Service]
-#Restart=no
 Type=oneshot
 RemainAfterExit=Yes
 ExecStart=/usr/bin/tmux-session restore
 ExecStop=/usr/bin/tmux-session save
-User=%i
-#Slice=tmux-%i.slice
+TimeoutStopSec=120s
 
-#[Install]
-#WantedBy=multi-user.target
+[Install]
+WantedBy=default.target
