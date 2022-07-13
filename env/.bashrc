@@ -195,7 +195,7 @@ alias mountms2_c='mkdir $HOME/ms2 &>/dev/null ; sudo sudo mount -t cifs -o usern
 alias mountts='mkdir $HOME/testsrv &>/dev/null ; sudo mount -t nfs 10.8.16.158:/home/jarch_hu/testsrv $HOME/testsrv'
 alias mountsg='mkdir $HOME/sg &>/dev/null ; sudo mount -t nfs 10.8.17.89:/home/jarch_hu/sg $HOME/sg'
 alias mountpre='mkdir -p $HOME/ms2/pre &>/dev/null ; sudo mount -t nfs 192.168.122.157:/home/jarhu/work $HOME/ms2/pre'
-alias mountnas='mkdir $HOME/File &>/dev/null ; sudo mount -t cifs -o rw,username=jarch_hu,domain=paskey.corpnet.asus,uid=$(id -u),gid=$(id -g) //10.8.17.116/File $HOME/File/'
+alias mountnas='mkdir $HOME/File &>/dev/null ; sudo mount -t cifs -o credentials=$HOME/.smbpass_askey -o rw,uid=$(id -u),gid=$(id -g) //10.8.17.116/File $HOME/File/'
 alias gnome-terminal="gnome-terminal --disable-factory"
 alias eclipse='eclipse &>/dev/null &'
 alias pwonlaptop='wakeonlan B0:5C:DA:DD:95:35'
