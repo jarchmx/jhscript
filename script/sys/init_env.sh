@@ -21,7 +21,8 @@ COMMANDS_LIST="\
     sudo rm -f /usr/bin/tmux-session, \
     sudo cp $MAIN_DIR/script/sys/tmux-session /usr/bin/, \
     mkdir -p $HOME/.config/systemd/user/, \
-    ln -sf $MAIN_DIR/env/service/tmux.service $HOME/.config/systemd/user/, \
+    rm -f $HOME/.config/systemd/user/tmux.service, \
+    cp $MAIN_DIR/env/service/tmux.service $HOME/.config/systemd/user/, \
     systemctl --user enable tmux, \
 "
 
