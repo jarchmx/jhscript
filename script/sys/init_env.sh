@@ -11,6 +11,7 @@ COMMANDS_LIST="\
     mkdir -p $HOME/.ssh, \
     mkdir -p $HOME/bin/, \
     ln -sf $MAIN_DIR/env/ssh/config $HOME/.ssh, \
+    chmod 0600 $HOME/.ssh/config, \
     mkdir -p $HOME/workspace/,\
     ln -sf $MAIN_DIR/cfg/eclipse_template $HOME/workspace/, \
     ln -sf $MAIN_DIR/script/sys/tmux-session $HOME/bin/, \

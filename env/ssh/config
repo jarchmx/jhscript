@@ -1,3 +1,7 @@
+#~/.ssh/id_rsa for normal usage.
+#~/.ssh/id_rsa_mg_admin for gerrit management.
+#~/.ssh/id_rsa_gerrit for sync between gerrit to slave and others.
+
 Host mgerrit
     Hostname gerrit.askey.cn
     Port 29418
@@ -13,6 +17,11 @@ Host mg
     Hostname gerrit.askey.cn
     Port 22
     User jarch_hu
+
+Host slave.gerrit.askey.cn
+    Port 22
+    User gerrit
+    IdentityFile ~/.ssh/id_rsa_gerrit
 
 Host sg
     Hostname slave.gerrit.askey.cn
