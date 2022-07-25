@@ -12,8 +12,10 @@
     <persistedState key="aggregateWorkingSetId" value="Aggregate for window 1537412278824"/>
     <tags>topLevel</tags>
     <tags>shellMaximized</tags>
-    <children xsi:type="basic:PartSashContainer" xmi:id="_CzNXorylEeiksa2E4jgnlA" selectedElement="_CzNXo7ylEeiksa2E4jgnlA" horizontal="true">
-      <children xsi:type="advanced:PerspectiveStack" xmi:id="_CzNXo7ylEeiksa2E4jgnlA" elementId="org.eclipse.ui.ide.perspectivestack" containerData="7500" selectedElement="_CzNXpLylEeiksa2E4jgnlA">
+    <children xsi:type="basic:PartSashContainer" xmi:id="_CzNXorylEeiksa2E4jgnlA" visible="false" selectedElement="_CzNXo7ylEeiksa2E4jgnlA" horizontal="true">
+      <children xsi:type="advanced:PerspectiveStack" xmi:id="_CzNXo7ylEeiksa2E4jgnlA" elementId="org.eclipse.ui.ide.perspectivestack" visible="false" containerData="7500" selectedElement="_CzNXpLylEeiksa2E4jgnlA">
+        <tags>Minimized</tags>
+        <tags>MinimizedByZoom</tags>
         <children xsi:type="advanced:Perspective" xmi:id="_CzNXpLylEeiksa2E4jgnlA" elementId="org.eclipse.cdt.ui.CPerspective.jarch_dev" selectedElement="_bKea4Px4EeqozZ7lsE-6Hg" label="jarch_dev" iconURI="platform:/plugin/org.eclipse.cdt.ui/icons/view16/c_pers.gif" tooltip="jarch_dev">
           <persistedState key="persp.hiddenItems" value="persp.hideToolbarSC:print,persp.hideToolbarSC:org.eclipse.ui.edit.undo,persp.hideToolbarSC:org.eclipse.ui.edit.redo,persp.hideToolbarSC:org.eclipse.ui.edit.text.toggleShowSelectedElementOnly,persp.hideToolbarSC:org.eclipse.debug.ui.commands.RunToLine,"/>
           <tags>persp.actionSet:org.eclipse.mylyn.doc.actionSet</tags>
@@ -101,7 +103,6 @@
               </children>
               <children xsi:type="basic:PartSashContainer" xmi:id="_bKea6_x4EeqozZ7lsE-6Hg" containerData="1072" selectedElement="_bKea7Px4EeqozZ7lsE-6Hg" horizontal="true">
                 <children xsi:type="basic:PartStack" xmi:id="_bKea7Px4EeqozZ7lsE-6Hg" elementId="PartStack@655ba9f7" containerData="5000" selectedElement="_bKea7fx4EeqozZ7lsE-6Hg">
-                  <tags>active</tags>
                   <children xsi:type="advanced:Placeholder" xmi:id="_bKea7fx4EeqozZ7lsE-6Hg" elementId="org.eclipse.ui.navigator.ProjectExplorer" ref="_CzN_KrylEeiksa2E4jgnlA" closeable="true">
                     <tags>View</tags>
                     <tags>categoryTag:General</tags>
@@ -166,6 +167,8 @@
       </children>
       <children xsi:type="basic:PartStack" xmi:id="_CzNXvbylEeiksa2E4jgnlA" elementId="stickyFolderRight" visible="false" containerData="2500" selectedElement="_CzNXv7ylEeiksa2E4jgnlA">
         <tags>Minimized</tags>
+        <tags>active</tags>
+        <tags>Maximized</tags>
         <children xsi:type="advanced:Placeholder" xmi:id="_CzNXvrylEeiksa2E4jgnlA" elementId="org.eclipse.help.ui.HelpView" ref="_CzN-wbylEeiksa2E4jgnlA" closeable="true">
           <tags>View</tags>
           <tags>categoryTag:Help</tags>
@@ -198,6 +201,7 @@
       <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;view>&#xA;&lt;presentation currentPage=&quot;qroot&quot; restore=&quot;true&quot;/>&#xA;&lt;standbyPart/>&#xA;&lt;/view>"/>
       <tags>View</tags>
       <tags>categoryTag:General</tags>
+      <tags>active</tags>
       <menus xmi:id="_CzN-zrylEeiksa2E4jgnlA" elementId="org.eclipse.ui.internal.introview">
         <tags>ViewMenu</tags>
         <tags>menuContribution:menu</tags>
@@ -222,8 +226,6 @@
       <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;view CommonNavigator.LINKING_ENABLED=&quot;1&quot; currentWorkingSetName=&quot;Aggregate for window 1537412278824&quot; org.eclipse.cdt.ui.cview.groupincludes=&quot;false&quot; org.eclipse.cdt.ui.cview.groupmacros=&quot;false&quot; org.eclipse.cdt.ui.editor.CUChildren=&quot;true&quot; org.eclipse.ui.navigator.resources.workingSets.showTopLevelWorkingSets=&quot;0&quot;>&#xA;&lt;lastRecentlyUsedFilters/>&#xA;&lt;/view>"/>
       <tags>View</tags>
       <tags>categoryTag:General</tags>
-      <tags>active</tags>
-      <tags>activeOnClose</tags>
       <menus xmi:id="_CzN_K7ylEeiksa2E4jgnlA" elementId="org.eclipse.ui.navigator.ProjectExplorer">
         <tags>ViewMenu</tags>
         <tags>menuContribution:menu</tags>
@@ -545,7 +547,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_CzOmKLylEeiksa2E4jgnlA" elementId="org.eclipse.ui.workbench.file">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_PbXTsIsAEeyjCKPNXgyNkQ" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_CzS56bylEeiksa2E4jgnlA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_u622IAvFEe2VX41wi4DIDQ" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_CzS56bylEeiksa2E4jgnlA"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_CzOmOLylEeiksa2E4jgnlA" elementId="group.edit" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -580,7 +582,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_CzOmlbylEeiksa2E4jgnlA" elementId="org.eclipse.ui.workbench.navigate">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_PbZv8IsAEeyjCKPNXgyNkQ" elementId="org.eclipse.ui.window.pinEditor" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" enabled="false" type="Check" command="_CzS5mbylEeiksa2E4jgnlA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_u65SYAvFEe2VX41wi4DIDQ" elementId="org.eclipse.ui.window.pinEditor" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" enabled="false" type="Check" command="_CzS5mbylEeiksa2E4jgnlA"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_N0aOYMCOEei0uY7eWNRbig" elementId="org.eclipse.cdt.ui.editor.CEditor" visible="false">
         <tags>Draggable</tags>
@@ -617,8 +619,8 @@
         <tags>Draggable</tags>
       </children>
     </trimBars>
-    <trimBars xmi:id="_CzOmvbylEeiksa2E4jgnlA" elementId="org.eclipse.ui.trim.vertical1" toBeRendered="false" side="Left">
-      <children xsi:type="menu:ToolControl" xmi:id="_CzOmvrylEeiksa2E4jgnlA" elementId="org.eclipse.ui.ide.perspectivestack(minimized)" toBeRendered="false" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.addons.swt/org.eclipse.e4.ui.workbench.addons.minmax.TrimStack">
+    <trimBars xmi:id="_CzOmvbylEeiksa2E4jgnlA" elementId="org.eclipse.ui.trim.vertical1" side="Left">
+      <children xsi:type="menu:ToolControl" xmi:id="_CzOmvrylEeiksa2E4jgnlA" elementId="org.eclipse.ui.ide.perspectivestack(minimized)" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.addons.swt/org.eclipse.e4.ui.workbench.addons.minmax.TrimStack">
         <tags>TrimStack</tags>
         <tags>Draggable</tags>
       </children>
@@ -1102,11 +1104,21 @@
     <bindings xmi:id="_PLgSxIsAEeyjCKPNXgyNkQ" keySequence="ALT+SHIFT+T O" command="_A3p3ymclEeq7raanEZhgmg"/>
     <bindings xmi:id="_PLgSxYsAEeyjCKPNXgyNkQ" keySequence="ALT+SHIFT+T P" command="_A3p3z2clEeq7raanEZhgmg"/>
   </bindingTables>
-  <bindingTables xmi:id="_A4SJ0WclEeq7raanEZhgmg" elementId="basheditor.editors.BashEditor.context" bindingContext="_A3uJJGclEeq7raanEZhgmg"/>
+  <bindingTables xmi:id="_A4SJ0WclEeq7raanEZhgmg" elementId="basheditor.editors.BashEditor.context" bindingContext="_A3uJJGclEeq7raanEZhgmg">
+    <bindings xmi:id="_ulr3YAvFEe2VX41wi4DIDQ" keySequence="CTRL+SHIFT+P" command="_A3qey2clEeq7raanEZhgmg"/>
+    <bindings xmi:id="_ulsecAvFEe2VX41wi4DIDQ" keySequence="CTRL+7" command="_A3pQtGclEeq7raanEZhgmg"/>
+    <bindings xmi:id="_ultskAvFEe2VX41wi4DIDQ" keySequence="CTRL+SHIFT+G" command="_ulOkYQvFEe2VX41wi4DIDQ"/>
+    <bindings xmi:id="_uluToAvFEe2VX41wi4DIDQ" keySequence="CTRL+O" command="_A3p3tWclEeq7raanEZhgmg"/>
+    <bindings xmi:id="_ulu6sAvFEe2VX41wi4DIDQ" keySequence="ALT+SHIFT+O" command="_ulN9UQvFEe2VX41wi4DIDQ"/>
+    <bindings xmi:id="_ulvhwQvFEe2VX41wi4DIDQ" keySequence="F5" command="_CzS3hbylEeiksa2E4jgnlA"/>
+    <bindings xmi:id="_ulvhwgvFEe2VX41wi4DIDQ" keySequence="F6" command="_CzS4iLylEeiksa2E4jgnlA"/>
+  </bindingTables>
   <bindingTables xmi:id="_A4Sw4WclEeq7raanEZhgmg" elementId="com.python.pydev.contexts.window" bindingContext="_A3uJIGclEeq7raanEZhgmg">
     <bindings xmi:id="_PLZlFIsAEeyjCKPNXgyNkQ" keySequence="CTRL+SHIFT+T" command="_A3qewGclEeq7raanEZhgmg"/>
   </bindingTables>
-  <bindingTables xmi:id="_A4ZekWclEeq7raanEZhgmg" elementId="de.jcup.basheditor.debug.bash.debugging" bindingContext="_A3uJJWclEeq7raanEZhgmg"/>
+  <bindingTables xmi:id="_A4ZekWclEeq7raanEZhgmg" elementId="de.jcup.basheditor.debug.bash.debugging" bindingContext="_A3uJJWclEeq7raanEZhgmg">
+    <bindings xmi:id="_ulvhwAvFEe2VX41wi4DIDQ" keySequence="F7" command="_CzTefbylEeiksa2E4jgnlA"/>
+  </bindingTables>
   <bindingTables xmi:id="_A4aFoWclEeq7raanEZhgmg" elementId="org.eclipse.egit.ui.RepositoriesView.SingleRepository" bindingContext="_A3uJImclEeq7raanEZhgmg">
     <bindings xmi:id="_A4aFomclEeq7raanEZhgmg" keySequence="F2" command="_CzS3trylEeiksa2E4jgnlA"/>
   </bindingTables>
@@ -1987,6 +1999,12 @@
     <persistedState key="originalCompatibilityViewBundle" value="org.python.pydev.debug"/>
     <tags>View</tags>
     <tags>categoryTag:PyDev</tags>
+  </descriptors>
+  <descriptors xmi:id="_u4eQgAvFEe2VX41wi4DIDQ" elementId="de.jcup.basheditor.callhierarchy.BashCallHierarchyView" label="Bash Call Hierarchy" iconURI="platform:/plugin/de.jcup.basheditor/icons/view/call_hierarchy.png" tooltip="" category="Other" closeable="true" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView">
+    <persistedState key="originalCompatibilityViewClass" value="de.jcup.basheditor.callhierarchy.BashCallHierarchyView"/>
+    <persistedState key="originalCompatibilityViewBundle" value="de.jcup.basheditor"/>
+    <tags>View</tags>
+    <tags>categoryTag:Other</tags>
   </descriptors>
   <trimContributions xmi:id="_2r10UF9tEeO-yojH_y4TJA" elementId="org.eclipse.ui.ide.application.trimcontribution.QuickAccess" contributorURI="platform:/plugin/org.eclipse.ui.ide.application" toBeRendered="false" parentId="org.eclipse.ui.main.toolbar" positionInParent="last">
     <children xsi:type="menu:ToolControl" xmi:id="_76uUAF9tEeO-yojH_y4TJA" elementId="Spacer Glue" contributorURI="platform:/plugin/org.eclipse.ui.ide.application" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.renderers.swt/org.eclipse.e4.ui.workbench.renderers.swt.LayoutModifierToolControl">
@@ -3299,6 +3317,9 @@
   <commands xmi:id="_PZMwgIsAEeyjCKPNXgyNkQ" elementId="AUTOGEN:::org.python.pydev.debug.VariableViewActions/org.python.pydev.debug.variableViewActions.ShowClassReferences" commandName="Show Class Variables" description="Show Class Variables" category="_CzTfRLylEeiksa2E4jgnlA"/>
   <commands xmi:id="_PZMwgYsAEeyjCKPNXgyNkQ" elementId="AUTOGEN:::org.python.pydev.debug.VariableViewActions/org.python.pydev.debug.variableViewActions.ShowFunctionReferences" commandName="Show Function Variables" description="Show Function Variables" category="_CzTfRLylEeiksa2E4jgnlA"/>
   <commands xmi:id="_PZNXkIsAEeyjCKPNXgyNkQ" elementId="AUTOGEN:::org.python.pydev.navigator.actions.mylyn/org.python.pydev.navigator.actions.mylyn.FilterResourceNavigatorAction" commandName="Focus on Active Task" description="Focus on Active Task (Alt+Click to reveal filtered elements)" category="_CzTfRLylEeiksa2E4jgnlA"/>
+  <commands xmi:id="_ulN9UQvFEe2VX41wi4DIDQ" elementId="basheditor.editor.commands.togglemarkoccurrences" commandName="Toggle Mark Occurrences" description="When enabled, double click on a variable or a function inside editor will highlight definitions and usages inside script" category="_A3oChmclEeq7raanEZhgmg"/>
+  <commands xmi:id="_ulOkYAvFEe2VX41wi4DIDQ" elementId="basheditor.command.resource.openCallHierarchy" commandName="Open Bash Call Hierarchy" description="Open Bash Call Hierarchy from current selected file" category="_A3oChmclEeq7raanEZhgmg"/>
+  <commands xmi:id="_ulOkYQvFEe2VX41wi4DIDQ" elementId="basheditor.command.editor.openCallHierarchy" commandName="Open Bash Call Hierarchy" description="Open Bash Call Hierarchy from current selection inside editor" category="_A3oChmclEeq7raanEZhgmg"/>
   <addons xmi:id="_CzTfILylEeiksa2E4jgnlA" elementId="org.eclipse.e4.core.commands.service" contributorURI="platform:/plugin/org.eclipse.platform" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_CzTfIbylEeiksa2E4jgnlA" elementId="org.eclipse.e4.ui.contexts.service" contributorURI="platform:/plugin/org.eclipse.platform" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_CzTfIrylEeiksa2E4jgnlA" elementId="org.eclipse.e4.ui.bindings.service" contributorURI="platform:/plugin/org.eclipse.platform" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>
@@ -3312,7 +3333,7 @@
   </addons>
   <addons xmi:id="_CzTfKbylEeiksa2E4jgnlA" elementId="org.eclipse.ui.workbench.addon.0" contributorURI="platform:/plugin/org.eclipse.platform" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon"/>
   <addons xmi:id="_CzTfKrylEeiksa2E4jgnlA" elementId="SplitterAddon" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.addons.swt/org.eclipse.e4.ui.workbench.addons.splitteraddon.SplitterAddon"/>
-  <addons xmi:id="_PNX7AIsAEeyjCKPNXgyNkQ" elementId="org.eclipse.ui.ide.addon.0" contributionURI="bundleclass://org.eclipse.ui.ide/org.eclipse.ui.internal.ide.addons.SaveAllDirtyPartsAddon"/>
+  <addons xmi:id="_IYS0IKimEeS11vbz3f9ezw" elementId="org.eclipse.ui.ide.addon.0" contributorURI="platform:/plugin/org.eclipse.ui.ide" contributionURI="bundleclass://org.eclipse.ui.ide/org.eclipse.ui.internal.ide.addons.SaveAllDirtyPartsAddon"/>
   <addons xmi:id="_CzTfLLylEeiksa2E4jgnlA" elementId="org.eclipse.ui.ide.application.addon.0" contributorURI="platform:/plugin/org.eclipse.ui.ide.application" contributionURI="bundleclass://org.eclipse.ui.ide.application/org.eclipse.ui.internal.ide.application.addons.ModelCleanupAddon"/>
   <categories xmi:id="_CzTfLbylEeiksa2E4jgnlA" elementId="org.eclipse.ui.category.edit" name="Edit"/>
   <categories xmi:id="_CzTfLrylEeiksa2E4jgnlA" elementId="org.eclipse.mylyn.wikitext.ui.editor.category" name="WikiText Markup Editing Commands" description="commands for editing lightweight markup"/>
