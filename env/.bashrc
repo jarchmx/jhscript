@@ -192,9 +192,9 @@ alias mountms2_pre='sudo mount -t cifs -o username=jarch_hu,password=123456,uid=
 alias mountms68='mkdir -p $HOME/ms68 &>/dev/null ; sudo mount -t nfs 10.8.16.68:/home/users/jarch_hu/ms68 $HOME/ms68'
 alias mountms68_gerrit='mkdir -p $HOME/ms68_gerrit &>/dev/null ; sudo mount -t nfs 10.8.16.68:/home/users/gerrit $HOME/ms68_gerrit/'
 alias mountms68_cifs='mkdir -p $HOME/workspace/SDX6x &>/dev/null ; sudo mount -t cifs -o username=gerrit,password=123456,uid=$(id -u),gid=$(id -g) //10.8.16.68/gerrit/workspace/SDX6x/ $HOME/workspace/SDX6x'
-alias mountms2_c='mkdir $HOME/ms2 &>/dev/null ; sudo sudo mount -t cifs -o username=jarch_hu //10.8.16.120/jarch_hu/ms2 $HOME/ms2'
-alias mountts='mkdir $HOME/testsrv &>/dev/null ; sudo mount -t nfs 10.8.16.158:/home/jarch_hu/testsrv $HOME/testsrv'
+alias mountms2_c='mkdir $HOME/ms2 &>/dev/null ; sudo mount -t cifs -o username=jarch_hu //10.8.16.120/jarch_hu/ms2 $HOME/ms2'
 alias mountsg='mkdir $HOME/sg &>/dev/null ; sudo mount -t nfs 10.8.17.89:/home/jarch_hu/sg $HOME/sg'
+alias mountsg_c='mkdir $HOME/nas &>/dev/null ; sudo sudo mount -t cifs -o credentials=$HOME/.smbpass //10.8.17.89/jarch_hu/ $HOME/nas'
 alias mountpre='mkdir -p $HOME/ms2/pre &>/dev/null ; sudo mount -t nfs 192.168.122.157:/home/jarhu/work $HOME/ms2/pre'
 alias mountnas='mkdir $HOME/File &>/dev/null ; sudo mount -t cifs -o credentials=$HOME/.smbpass_askey -o rw,uid=$(id -u),gid=$(id -g) //10.8.17.116/File $HOME/File/'
 alias gnome-terminal="gnome-terminal --disable-factory"
