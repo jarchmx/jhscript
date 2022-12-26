@@ -57,13 +57,17 @@
     pushInsteadOf = git://gerrit.askey.cn
     pushInsteadOf = git://slave.gerrit.askey.cn
 
+[credential]
+    user = jarch_hu@askey.com
+    helper = store
+
 [credential "https://chipmaster2.qti.qualcomm.com"]
     user = jarch_hu@askey.com
     helper = store
 
 [http]
     followRedirects=true
-	postBuffer = 10240000000
+	postBuffer = 10240000
 	lowSpeedLimit = 0
 	lowSpeedTime = 999999
 
