@@ -1,0 +1,18 @@
+# Let NetworkManager manage all devices on this system
+network:
+  ethernets:
+    eth0:
+      dhcp4: no
+      dhcp6: no
+
+  version: 2
+  renderer: networkd
+  bridges:
+    extbr0:
+      interfaces: [eth0]
+      macaddress: b0:5c:da:dd:95:39
+      parameters:
+        stp: true
+        forward-delay: 4
+      dhcp4: yes
+      dhcp6: yes
