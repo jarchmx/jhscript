@@ -205,10 +205,13 @@ alias gcp='ssh mgerrit gerrit create-project '
 alias gsp='ssh mgerrit gerrit set-project-parent -p '
 alias glp='ssh mgerrit gerrit ls-projects '
 
-
 #alias fn='find . -iname '
 alias gn='grep -nr'
 alias gi='grep -inr'
+
+#ssh
+alias ssh='ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
+alias scp='scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
 
 export T32SYS=/opt/t32
 export T32TMP=/tmp
