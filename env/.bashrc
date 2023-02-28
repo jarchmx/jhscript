@@ -140,6 +140,12 @@ mc()
         sleep 1
     fi
 
+    #kill the process opened /dev/$DEV.
+    for pid in $(ps aux | grep /dev/$DEV | grep -v grep | awk '{print $2}')
+    do
+        sudo kill -9 $pid
+    done
+
     if [ -n $BAUD ];then
         echo minicom -D /dev/$DEV -b $BAUD -w -C $LOGFILE default
         sudo minicom -D /dev/$DEV -b $BAUD -w -C $LOGFILE default
