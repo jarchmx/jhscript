@@ -1,0 +1,10 @@
+config: {}
+description: MACVlan networking LXD profile
+devices:
+  eth1:
+    name: eth1
+    nictype: macvlan
+    parent: eth1
+    type: nic
+name: macvlan
+used_by: []

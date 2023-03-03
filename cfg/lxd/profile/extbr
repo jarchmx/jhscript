@@ -1,0 +1,10 @@
+config: {}
+description: Bridged networking LXD profile
+devices:
+  eth2:
+    name: eth2
+    nictype: bridged
+    parent: extbr0
+    type: nic
+name: extbr
+used_by: []

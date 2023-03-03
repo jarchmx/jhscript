@@ -80,9 +80,9 @@ elif [ "$PRODUCT" == "c6xx" ] && [ "$VERSION" == "2.7" ];then
     objdump=/opt/askey/c6xx/sysroots/x86_64-oesdk-linux/usr/bin/arm-oe-linux-gnueabi/arm-oe-linux-gnueabi-objdump
     #ARGS="--force-hardware sdxprairie "
 elif [ "$PRODUCT" == "olympic" ];then
-    gdb=/opt/askey/olympic/sysroots/x86_64-qtisdk-linux/usr/bin/arm-oe-linux/arm-oe-linux-gdb
-    nm=/opt/askey/olympic/sysroots/x86_64-qtisdk-linux/usr/bin/arm-oe-linux/arm-oe-linux-nm
-    objdump=/opt/askey/olympic/sysroots/x86_64-qtisdk-linux/usr/bin/arm-oe-linux/arm-oe-linux-objdump
+    gdb=/opt/meta-toolchain-askey-x86_64-sdxlemur/sysroots/x86_64-qtisdk-linux/usr/bin/arm-oe-linux/arm-oe-linux-gdb
+    nm=/opt/meta-toolchain-askey-x86_64-sdxlemur/sysroots/x86_64-qtisdk-linux/usr/bin/arm-oe-linux/arm-oe-linux-nm
+    objdump=/opt/meta-toolchain-askey-x86_64-sdxlemur/sysroots/x86_64-qtisdk-linux/usr/bin/arm-oe-linux/arm-oe-linux-objdump
     #ARGS="--force-hardware sdxprairie "
 else
     echo "Wrong product or yocto version"
@@ -107,7 +107,7 @@ out=$local_path/out
 MAINARGS="-v $vmlinux -g $gdb  -n $nm  -j $objdump -a $ramdump -o $out -x --everything --ipc-debug --print-ipc-logging "
 
 # git clone git://codeaurora.org/quic/la/platform/vendor/qcom-opensource/tools
-ramparse_dir=/home/${USER}/sw/qualcomm/tools/linux-ramdump-parser-v2/
+ramparse_dir=$HOME/sw/qualcomm/tools/linux-ramdump-parser-v2/
 ########################################################################################
 
 #echo "cd $ramparse_dir"
