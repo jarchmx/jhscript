@@ -136,12 +136,17 @@ mc()
     sudo ln -sf $LOGFILE "$LOGPATH".log
 
     if [ ! -c /dev/$DEV ];then
-        sudo socat pty,link=/dev/$DEV tcp:localhost:2000 &
+        set -x
+        NUM=${DEV:0-1}
+        SOPORT=$(expr $NUM + 7000)
+        [ x"$SOSERVER" == "x" ] && SOSERVER=10.8.16.75
+        sudo socat pty,link=/dev/$DEV tcp:$SOSERVER:$SOPORT &
+        set +x
         sleep 1
     fi
 
     #kill the process opened /dev/$DEV.
-    for pid in $(ps aux | grep /dev/$DEV | grep -v grep | awk '{print $2}')
+    for pid in $(ps aux | grep /dev/$DEV | grep -v grep | grep -v socat | awk '{print $2}')
     do
         sudo kill -9 $pid
     done
