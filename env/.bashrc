@@ -261,3 +261,16 @@ gitpush()
     fi
     git push $remote HEAD:refs/for/$dft_branch$@
 }
+
+forward_zero()
+{
+    outgress=$(ip route | grep 10.8 | grep default | awk '{print $NF}')
+    echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward
+    sudo iptables -t nat -A POSTROUTING --out-interface $outgress -j MASQUERADE
+    #sudo iptables -A FORWARD --in-interface all -j ACCEPT
+}
+
+noforward_zero()
+{
+    echo 0 | sudo tee /proc/sys/net/ipv4/ip_forward
+}
