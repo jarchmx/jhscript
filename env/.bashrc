@@ -138,8 +138,8 @@ mc()
     if [ ! -c /dev/$DEV ];then
         set -x
         NUM=${DEV:0-1}
-        SOPORT=$(expr $NUM + 7000)
-        [ x"$SOSERVER" == "x" ] && SOSERVER=10.8.16.75
+        SOPORT=$(expr $NUM + 3002)
+        SOSERVER=10.8.18.40
         sudo socat pty,link=/dev/$DEV tcp:$SOSERVER:$SOPORT &
         set +x
         sleep 1
@@ -264,7 +264,7 @@ gitpush()
 
 forward_zero()
 {
-    outgress=$(ip route | grep 10.8 | grep default | awk '{print $NF}')
+    outgress=$(ip route | grep 10.8 | grep default | awk '{print $5}')
     echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward
     sudo iptables -t nat -A POSTROUTING --out-interface $outgress -j MASQUERADE
     #sudo iptables -A FORWARD --in-interface all -j ACCEPT
