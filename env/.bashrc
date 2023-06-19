@@ -139,7 +139,7 @@ mc()
         set -x
         NUM=${DEV:0-1}
         SOPORT=$(expr $NUM + 3002)
-        SOSERVER=10.8.18.40
+        SOSERVER=jconserv
         sudo socat pty,link=/dev/$DEV tcp:$SOSERVER:$SOPORT &
         set +x
         sleep 1
