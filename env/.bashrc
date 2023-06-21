@@ -140,7 +140,8 @@ mc()
         set -x
         [ -c /dev/$DEV ] && sudo unlink /dev/$DEV
         NUM=${DEV:0-1}
-        [ x$SOPORT == "x" ] && SOPORT=$(expr $NUM + 50000)
+        [ x$SOPORT_BASE == "x" ] && SOPORT_BASE=50000
+        SOPORT=$(expr $NUM + $SOPORT_BASE)
         [ x$SOSERVER == "x" ] && SOSERVER=jconserv
         sudo socat pty,link=/dev/$DEV tcp:$SOSERVER:$SOPORT &
         set +x
