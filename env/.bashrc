@@ -118,6 +118,7 @@ export PATH=$PATH:/sbin/:/opt/eclipse:$HOME/bin:/mnt/d/sw/android/adb_new/
 
 if ! tmux ls &>/dev/null ;then tmux-session restore &>/dev/null ; fi
 
+[ -f /etc/serial.conf ] && . /etc/serial.conf
 mc()
 {
     if [ x"$1" == "x" ];then
@@ -135,11 +136,12 @@ mc()
     sudo touch $LOGFILE
     sudo ln -sf $LOGFILE "$LOGPATH".log
 
-    if [ ! -c /dev/$DEV ];then
+    if [ ! -c /dev/$DEV ] || realpath /dev/$DEV | grep pts &>/dev/null ;then
         set -x
+        [ -c /dev/$DEV ] && sudo unlink /dev/$DEV
         NUM=${DEV:0-1}
-        SOPORT=$(expr $NUM + 3002)
-        SOSERVER=jconserv
+        [ x$SOPORT == "x" ] && SOPORT=$(expr $NUM + 50000)
+        [ x$SOSERVER == "x" ] && SOSERVER=jconserv
         sudo socat pty,link=/dev/$DEV tcp:$SOSERVER:$SOPORT &
         set +x
         sleep 1
