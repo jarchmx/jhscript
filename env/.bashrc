@@ -118,9 +118,10 @@ export PATH=$PATH:/sbin/:/opt/eclipse:$HOME/bin:/mnt/d/sw/android/adb_new/
 
 if ! tmux ls &>/dev/null ;then tmux-session restore &>/dev/null ; fi
 
-[ -f /etc/serial.conf ] && . /etc/serial.conf
 mc()
 {
+    [ -f /etc/serial.conf ] && . /etc/serial.conf
+
     if [ x"$1" == "x" ];then
        echo "Please run minicom1 with dev"
        return 1
@@ -128,6 +129,7 @@ mc()
 
     DEV=$1
     BAUD=$2
+    SOPORT=$3
 
     LOGPATH=/opt/log/$DEV
     LOGFILE="$LOGPATH"/$(date +%Y%m%d%H%M%S).log
@@ -140,8 +142,10 @@ mc()
         set -x
         [ -c /dev/$DEV ] && sudo unlink /dev/$DEV
         NUM=${DEV:0-1}
-        [ x$SOPORT_BASE == "x" ] && SOPORT_BASE=50000
-        SOPORT=$(expr $NUM + $SOPORT_BASE)
+        #set without soport,calculate form SOPORT_BASE or from 50000.
+        if [ x$SOPORT == "x" ];then
+            [ x$SOPORT_BASE == "x" ] && SOPORT=$(expr 50000+$NUM) || SOPORT=$(expr $SOPORT_BASE + $NUM)
+        fi
         [ x$SOSERVER == "x" ] && SOSERVER=jconserv
         sudo socat pty,link=/dev/$DEV tcp:$SOSERVER:$SOPORT &
         set +x
