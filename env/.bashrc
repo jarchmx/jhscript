@@ -281,3 +281,6 @@ noforward_zero()
 {
     echo 0 | sudo tee /proc/sys/net/ipv4/ip_forward
 }
+#sectools argument autocompletion
+pyargcomp=$(which register-python-argcomplete)
+[ x$pyargcomp != "x" ] && eval "$(register-python-argcomplete sectools)"
