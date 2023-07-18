@@ -148,6 +148,11 @@ mc()
         fi
         [ x$SOSERVER == "x" ] && SOSERVER=jconserv
         sudo socat pty,link=/dev/$DEV tcp:$SOSERVER:$SOPORT &
+        SOCATPID=$!
+        echo SOCATPID:$SOCATPID
+        sleep 1
+        SOCATPIDS=$(ps -ef | grep $SOCATPID | grep -v grep | awk '{print $2}')
+        echo SOCATPIDS:$SOCATPIDS
         set +x
         sleep 1
     fi
@@ -165,6 +170,7 @@ mc()
         echo minicom -D /dev/$DEV -b 115200 -w -C $LOGFILE default
         sudo minicom -D /dev/$DEV -b 115200 -w -C $LOGFILE default
     fi
+    [ -n "$SOCATPIDS" ] && for pid in $SOCATPIDS ; do  sudo kill -9 $pid ; done
 }
 
 ta()
