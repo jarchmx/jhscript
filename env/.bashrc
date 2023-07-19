@@ -118,18 +118,87 @@ export PATH=$PATH:/sbin/:/opt/eclipse:$HOME/bin:/mnt/d/sw/android/adb_new/
 
 if ! tmux ls &>/dev/null ;then tmux-session restore &>/dev/null ; fi
 
+function mc_usage()
+{
+cat << EOF
+    mc<minicom connect>
+
+    connect to serial port, create socat seciral device if device not exit.
+    ========================================================================================================
+    Usage: mc [options]
+    ========================================================================================================
+    Options:
+
+    -d/--dev: device to attach, default ttyUSB0.
+
+    -b/--baud: baudrate, default is 115200.
+
+    -p/--port: socat port to connect serial server,default is 3003.
+
+    -i/--ip:   socat ip to connect serial server, default is 10.8.16.95.
+
+    ========================================================================================================
+    Example:
+    mc -d ttyUSB2
+    mc -d ttyUSB2 -i 10.8.16.95 -p 3003 -b 115200
+    ========================================================================================================
+
+EOF
+
+    return 1
+}
+
 mc()
 {
-    [ -f /etc/serial.conf ] && . /etc/serial.conf
+    DEV="ttyUSB0"
+    BAUD="115200"
+    SOPORT="3003"
+    SOIP="10.8.16.95"
+    #PARAMS=$@
+    #=======================================
+    # script options
+    #=======================================
+    SHOPT_OPTS="d:b:p:i:h"
+    LONG_OPTS="dev:,baud:,port:,ip:,help"
 
-    if [ x"$1" == "x" ];then
-       echo "Please run minicom1 with dev"
-       return 1
-    fi
-
-    DEV=$1
-    BAUD=$2
-    SOPORT=$3
+    temp=`getopt -o $SHOPT_OPTS --long $LONG_OPTS -- "$@"`
+    if [ $? != 0 ] ; then echo "terminating..." >&2 ; usage ; fi
+    # note the quotes around `$temp': they are essential!
+    eval set -- "$temp"
+    while true ; do
+        case $1 in
+            -d|--dev)
+                DEV=$2
+                shift 2
+                ;;
+            -b|--baud)
+                BAUD=$2
+                shift 2
+                ;;
+            -p|--port)
+                SOPORT=$2
+                shift 2
+                ;;
+            -i|--ip)
+                SOIP=$2
+                shift 2
+                ;;
+            -h|--help)
+                mc_usage
+                return 1
+                shift
+                ;;
+            --)
+                shift
+                break
+                ;;
+            *)
+                echo "parameters error!"
+                mc_usage
+                return 1
+                ;;
+        esac
+    done
 
     LOGPATH=/opt/log/$DEV
     LOGFILE="$LOGPATH"/$(date +%Y%m%d%H%M%S).log
@@ -142,12 +211,7 @@ mc()
         set -x
         [ -c /dev/$DEV ] && sudo unlink /dev/$DEV
         NUM=${DEV:0-1}
-        #set without soport,calculate form SOPORT_BASE or from 50000.
-        if [ x$SOPORT == "x" ];then
-            [ x$SOPORT_BASE == "x" ] && SOPORT=$(expr 50000+$NUM) || SOPORT=$(expr $SOPORT_BASE + $NUM)
-        fi
-        [ x$SOSERVER == "x" ] && SOSERVER=jconserv
-        sudo socat pty,link=/dev/$DEV tcp:$SOSERVER:$SOPORT &
+        sudo socat pty,link=/dev/$DEV tcp:$SOIP:$SOPORT &
         SOCATPID=$!
         echo SOCATPID:$SOCATPID
         sleep 1
@@ -163,13 +227,9 @@ mc()
         sudo kill -9 $pid
     done
 
-    if [ -n $BAUD ];then
-        echo minicom -D /dev/$DEV -b $BAUD -w -C $LOGFILE default
-        sudo minicom -D /dev/$DEV -b $BAUD -w -C $LOGFILE default
-    else        
-        echo minicom -D /dev/$DEV -b 115200 -w -C $LOGFILE default
-        sudo minicom -D /dev/$DEV -b 115200 -w -C $LOGFILE default
-    fi
+    echo minicom -D /dev/$DEV -b $BAUD -w -C $LOGFILE default
+    sudo minicom -D /dev/$DEV -b $BAUD -w -C $LOGFILE default
+
     [ -n "$SOCATPIDS" ] && for pid in $SOCATPIDS ; do  sudo kill -9 $pid ; done
 }
 
