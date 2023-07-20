@@ -326,13 +326,21 @@ kill_bitbake()
 
 gitpush()
 {
+    set -x
     remote=`git remote`
     dft_branch=`git branch -a | grep '\->' | awk -F'>' '{print $2}' | sed "s/$remote\///g" | tr -d ' ' | tr -d '\n'`
     if [[ x$dft_branch == "x" || x$remote == "x" ]];then
         echo "Can't detect default branch, please check it by \' git branch -a | grep master\'"
         return 1
     fi
-    git push $remote HEAD:refs/for/$dft_branch$@
+    TOPIC=""
+    if  git lg -1 | grep HEAD | grep PGTEL &>/dev/null ;then
+        JIRA_NUM=$(git lg -1 | grep HEAD | grep PGTEL |sed -e 's/\(^\|.* \)PGTEL-\([^ ]*\) .*/\2/' | awk -F':' '{print $1}')
+        JIRA="PGTEL-$JIRA_NUM"
+        TOPIC="%topic=$JIRA"
+    fi
+    git push $remote HEAD:refs/for/$dft_branch$TOPIC $@
+    set +x
 }
 
 forward_zero()
